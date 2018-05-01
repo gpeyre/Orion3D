@@ -1,0 +1,66 @@
+##############################################
+# List of file to use in GW test.
+# .ply : Stanford Polygon format.
+# .ase : 3DStudio text format.
+# .gwm : GeoWave Model file format.
+##############################################
+
+../ressources/ase/sphere_hole_3.gwm
+../ressources/off/david_head.gwm
+../ressources/ase/sphere_hole_5.gwm
+../ressources/ase/face_woman1.gwm
+../ressources/ase/face_man1.gwm
+../ressources/ase/sphere_hole_1.gwm
+../ressources/ase/sphere_hole_2.gwm
+../ressources/ase/sphere_hole_4.gwm
+../ressources/ase/sphere_hole_6.ase
+../ressources/ase/hemisphere3.gwm	
+../ressources/ase/david_half_head.gwm
+../ressources/wrl/nic.gwm
+../ressources/ply/face_h.gwm
+../ressources/wrl/object_gil_full.gwm
+../ressources/ase/nurbs3.gwm
+../ressources/ase/plane3.gwm
+../ressources/ase/plane2.gwm
+../ressources/ase/patch.gwm
+../ressources/ase/geosphere2.gwm
+../ressources/ply/octa-flower.gwm
+../ressources/ase/torus2.gwm
+../ressources/ply/mannequinhead.gwm
+../ressources/ase/plane_deformed.gwm
+../ressources/ase/vlsm.gwm
+../ressources/ply/hand.gwm
+../ressources/ase/ens2.gwm
+../ressources/ase/hose.gwm
+../ressources/ply/foot.gwm
+../ressources/off/bunny.gwm	
+../ressources/ply/toilet.gwm
+../ressources/ply/mannequinhead.gwm
+../ressources/ply/sculpture.gwm
+../ressources/ply/shoe2.gwm
+../ressources/ply/dentalcast.gwm
+../ressources/ply/twirl.gwm
+../ressources/ply/face_o.gwm
+../ressources/ply/face_y.gwm
+# ../ressources/ply/lion-dog.ply
+../ressources/ply/maneki-neko.gwm
+../ressources/ply/moai.gwm
+../ressources/ply/focal.gwm
+../ressources/ply/monk.ply
+# ../ressources/ply/squirrel.ply
+# ../ressources/ase/plane.gwm
+../ressources/ase/hole.gwm
+../ressources/ase/sphere2.gwm
+# ../ressources/ase/plane2.gwm
+../ressources/ase/knot.gwm
+../ressources/ase/torus2.gwm
+# ../ressources/ase/teapot.ase
+../ressources/ase/torus.gwm
+../ressources/ase/funkyshit.gwm
+../ressources/ase/capsule.gwm
+../ressources/ase/cylinder.gwm
+../ressources/ase/football.gwm
+../ressources/ase/plane.gwm
+../ressources/ase/pyramid.gwm
+../ressources/ase/tube.gwm
+# ../ressources/ase/cube.gwm

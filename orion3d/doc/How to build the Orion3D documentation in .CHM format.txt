@@ -1,0 +1,19 @@
+This is only for Windows users
+
+First, if your orion3d cvs repository is in the \orion3d_cvs\ directory, you must have these files (if not, get then from the CVS) :
+\orion3d_cvs\doc\doxygen.exe
+\orion3d_cvs\doc\neato.exe
+\orion3d_cvs\orion3d\orion3d_doc.txt
+\orion3d_cvs\orion3d\doc_doxygen.bat
+
+(Note that doxygen.exe and neato.exe are not property of us and are under their own licenses. These files are only in the cvs for ease of use. If you want more information about doxygen and graphviz visit http://www.stack.nl/~dimitri/doxygen/index.html and http://www.research.att.com/sw/tools/graphviz/)
+
+Now download the free HTML Help Workshop from Microsoft which you can build .CHM Docs with (http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm)
+If you installed the HTML Help workshop in an other directory than \Program Files\HTML Help Workshop\ edit \orion3d_cvs\orion3d\doc_doxygen.bat and change it to the adequate directory
+
+Run \orion3d_cvs\orion3d\doc_doxygen.bat : you will see a console window showing the creation of the documentation, then the HTML Workshop should run with the project containging the Orion3D documentation. Choose File>Compile (or click on the 3rd icon) and click compile (if you get an error you might have to re-select the index.hhp file by clicking on "Browse").
+
+Close the HTML Help Workshop. The index.chm file containing all the documentation is now in the \orion3d_cvs\orion3d\doxygen_doc\html\ directory, and can be directly used. You can also delete all the other files if you do not want to have the help in HTML Format.
+
+
+	Antoche.

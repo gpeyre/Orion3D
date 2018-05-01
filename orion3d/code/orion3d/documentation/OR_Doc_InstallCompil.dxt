@@ -1,0 +1,181 @@
+/*!
+	\page pageinstall	Orion3D installation & compilation	
+
+	\section	need All you need ...
+
+	\subsection files The Orion3D binaries.
+			\b Orion3D is in fact split into several binaries :
+				- The \b Orion3D core librarie. Can be build into a dll or a static library.
+				- The different wrapper for input/output. Are build into static library.
+				- Additional wrapper, such as a wrapper for scripting langage support, via \b LUA.
+			
+			Each dll and/or library exist in two versions :
+				- release version.
+				- debug version : have an \c '_dbg' suffix.
+				
+	\subsection instal How to install Orion3D ?
+			First either :
+				- unzip the sdk in some convenient location.
+				- checkout the whole repository from the CVS of Orion3D (you can use anonymous login) in some convenient location.
+				
+			Put everything you find in /binaries/external_dll/ in your windows system/ directory.
+			
+			Put the auxiliray include files under the include directory of your compiler 
+			(for example 'C:\Program Files\Microsoft Visual Studio .NET\Vc7\include') :
+				- move everything from the directory /devil/ to your include/ directory.
+				- move everything from the directory /glut/ to your include/ directory.
+				- move everything from the directory /gtk+/ to your include/ directory.
+				- move everything from the directory /ftgl/ to your include/ directory.
+				- move everything from the directory /freetype-2+/ to your include/ directory.
+				
+			If you are using VisualC++6, you should correct a bug in the Microsoft STL, by replacing the xtree file provied by 
+			microsoft. Just put the file /stl_fix/xtree in your include directory (overwrite the old version).
+				
+			At last, you can start using Orion3D. For example, open the project file 'samples/samples.sln' (.dsw for VC6 users).
+
+	\subsection build How to build Orion3D ?
+			Under VC++, you can use :
+				- the \b Orion3D.dsp project file to build orion3d.dll and orion3d.lib.
+				- the \b Orion3D_static.dsp project file to build orion3d_static.lib.
+			
+			You should add this project to your application project, to have an easy access
+			to each \b Orion3D header. Refers to \b OrionViewer for a good example of all that.
+
+			By default, the \b Orion3D project build the \b Orion3D librarie files in the 
+			\c 'binaries/orion3d_lib/' directory, and the dll files in the \c 'binaries/orion3d_dll/' directory.
+			So you should put the .lib file in a directory accessible to your project 
+			(the best thing would be to always put up-to-date .lib in the \c 'binaries/orion3d_lib/' directory, and
+			add an additionnal lib path to this directory in your project ).
+			A good thing would be to add a pre-linkage command that copy the dll in the working directory, 
+			cf. \b OrionViewer for an example.
+
+			The header to use to configurate \b Orion3D build is \c OR_Config.h. Here are the different
+			pre-processor directives you can use :
+				- \c _WIN32_ / \c _MAC_OS_ / \c _UNIX_ : select on which OS you are working.
+				This defintion is made in the project settings.
+				- \c _USE_SOUND_ : choose to use \b Orion3D sound library or not on your
+				project. Using \b FMOD imply that fmod_vc.lib will automaticaly
+				be added to the \b Orion3D project. This also imply that
+				your application will need fmod.dll to run.
+				This definition is active by default, so if you don't want to use this lib, 
+				please undefine it and re-build \b Orion3D.
+				- \c _USE_ZLIB_ : choose to use the \b ZLIB library to handle \c .zip archive.
+				Using \b Orion3D ZIP managing library imply that zlib.lib will automaticaly
+				be added to the \b Orion3D project. This also imply that
+				your application will need zlib.dll to run.
+				This definition is active by default, so if you don't want to use this lib, 
+				please undefine it and re-build \b Orion3D.
+				- \c _USE_OPENIL_ : choose to use the \b OpenIL library to handle image files
+				(such as .bmp, .jpeg, .png, .tga, ...). As there is currently no other 
+				alternative to OpenIL, you won't be able to read any image file
+				if you don't use OpenIL. 
+				Using OpenIL imply that OpenIL.lib will automaticaly
+				be added to the \b Orion3D project. This also imply that
+				your application will need devil.dll to run.
+				This definition is active by default, so if you don't want to use this lib, 
+				please undefine it and re-build \b Orion3D.
+				- \c _USE_OPCODE_ : use \b Opcode for collision detection (this is required to build \b Orion3D
+				for the moment). This will require the utilisation of the \b Opcode dll to run.
+
+			Then, you have to tell that you want to build the dll, so ORION3D_EXPORTS must be define.
+			This defintion is made in the project settings.
+			Here is a complete list of the different defintions for linkage (this will be interesting 
+			when you will want to use \b Orion3D rather than build it... we will talk about that later) :
+				- \c ORION3D_EXPORTS : if you want to build orion3d_xxx.dll.
+				- \c ORION3D_IMPORTS : if you want to use orion3d_xxx.dll in your project, you have to 
+				add this definition.
+
+			For debuging purposes (or optimisation ...), you can edit OR_DebugConfig.h, you'll 
+			have a lot of pre-processor definitions, to enable/override debugging stuff.
+			
+			Note that once you've defined either \c ORION3D_EXPORTS or \c ORION3D_IMPORTS, you don't 
+			have to care about specifying the library to link with, simply including the file \c OR_Config.h
+			will do this for you.
+
+	\subsection	io_wrapper Orion3D input/output wrappers.
+			To handle input and output, \b Orion3D use \e wrappers, which are external libraries linked staticaly
+			with your application. For the moment, here are the wrapper proposed :
+				- \c wrapper_glut : use \b glut library.
+				- \c wrapper_gtk : use \b gtk library.
+				- \c wrapper_win32 : use \b win32 library.
+				- \c wrapper_none : no library used, you must provide your own functions.
+
+			You must link with the correct wrapper your application, using for example the code :
+			\code
+			#ifdef OR_DEBUG
+				#pragma comment(lib, "orion3d_wrapper_glut_dbg.lib")
+			#else
+				#pragma comment(lib, "orion3d_wrapper_glut.lib")
+			#endif // ORION3D_DEBUG
+			\endcode
+
+	\sucsection toolkit		Orion3D toolkit
+			To ease the creation of \b Orion3D datas, a \e toolkit is provided. Refer to \b OrionViewer source
+			code to see how to use it in practice.
+
+			This is a static link library, that has it's own \c .dsp. So you must add the following code to link you
+			application with the toolkit :
+			\code
+			#ifdef OR_DEBUG
+				#pragma comment(lib, "orion3d_toolkit_dbg.lib")
+			#else
+				#pragma comment(lib, "orion3d_toolkit.lib")
+			#endif // ORION3D_DEBUG
+			\endcode
+
+				
+	\section    extern External libraries.
+			\b Orion3D uses some external libraries. The header files of each library can be found in
+			an explicit direcory (such as 'fmod/' for fmod ...). The binary .lib files can be found in
+			binaries/external_lib/, and this directory is added as an 'additionnal lib folder' in the \b Orion3D
+			project settings. The binary .dll files can be found in binaries/external_dll/, and all the dll
+			should be put in your path (for example in your system/ directory). Here is a list of the external libraries
+			used by Orion3D :
+				- <A HREF="http://www.fmod.org/">fmod</A> : sound library. Define '_USE_FMOD_' if you want to use fmod in \b Orion3D.
+				- <A HREF="http://www.info-zip.org/pub/infozip/zlib/">zlib</A> : compression library. Define '_USE_ZLIB_' if you want to use zlib in \b Orion3D.
+				- <A HREF="http://www.openil.org/">openil</A> : image library. Define '_USE_OPENIL_' if you want to use openil in \b Orion3D
+				(this is required for the moment).
+
+			Note that to be able to read image files, .zip files or sound files from \b Orion3D, you'll need to
+			have an orion3D_xxx.dll that have been build using the correct above definitions, and of course the correct
+			.dll on your computer.
+
+	\section	coder How to use Orion in a program ?
+			The \b Orion3D project should be included in your program, to re-build it easyly. Check OrionViewer project
+			to see how all this stuff is done. Here is a quick overview of the things you'll have to care about :
+
+	\subsection preprocessor Setting up Orion3D
+			First, you have to define the following preprocessor definitions (for example, under VC++, in project>settings>C/C++>preprocessor) :
+				- OS : define either _WIN32_, _MAC_OS_ or _UNIX_, depending on your OS.
+				- Input/output wrapper : define either _USE_GLUT_, _USE_GTK_, _USE_WIN32_ or _USE_NONE_,
+					depending on which \b Orion3D wrapper you want to use.
+				- Linkage : define either ORION3D_IMPORTS (if you use the orion3d_xxx.dll), or
+					ORION3D_STATICLINK (if you want the \b Orion3D sources file to be included).
+						
+	\subsection libs Use the right Orion3D files
+			If your using dyamic link via dll, you'll have to care about :
+				- Puting the right orion3d_xxx.dll in your path (a good idea would be to always build the orion3d_xxx.dll
+				in binaries/orion3d_dll/, and to have a pre-linkage command that copy these dll in the working directory, 
+				cf. OrionViewer for an example).
+				- Define a path to the correct orion3d_xxx.lib (for example, with VC++, you should add an additionnal library
+				path to binaries/orion3d_lib/).
+
+	\subsection external Use the right external libraries files.
+			As said before, \b Orion3D uses external libraries, so you should have an orion3d_xxx.dll build with the external
+			libs you want to use. You'll have to rebuild the orion3d_xxx.dll if you want to use other libraries than the default one.
+						
+    \section	author Homepage and up-to-date informations
+			Visit the \b Orion3D homepage : <A HREF="http://www.orion3d.fr">www.orion3d.fr</A>
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+//  Copyright (C) 2000-2001 The  Orion3D Rewiew Board                        // 
+//---------------------------------------------------------------------------//
+//	This file is under the Orion3D licence.                                //
+//  Refer to orion3d_licence.txt for more details about the Orion3D Licence. //
+//---------------------------------------------------------------------------//
+//  Ce fichier est soumis a la Licence Orion3D.                              //
+//  Se reporter a orion3d_licence.txt pour plus de details sur cette licence.//
+///////////////////////////////////////////////////////////////////////////////
+//                           END OF FILE                                     //
+///////////////////////////////////////////////////////////////////////////////

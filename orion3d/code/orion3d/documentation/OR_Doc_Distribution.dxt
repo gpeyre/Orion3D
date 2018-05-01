@@ -1,0 +1,61 @@
+/*!
+	\page pagedistrib The Orion3D distribution
+
+	\section folder The folders organisation
+	Here is a brief description of each folder in the <b>Orion3D</b> distribution :
+		- <i>act/</i> : '.act' [animation] sample files.
+		- <i>binaries/</i> : the binaries (refer to \ref binsubfolder).
+		- <i>demos/</i> : demos using <b>Orion3D</b>, including metabounce, and "jolie fontaine" by Antoche.
+		- <i>doc/</i> : <b>Orion3D</b> documentation.
+		- <i>fmod/</i> : header files of fmod [used by <b>Orion3D</b> sound engine].
+		- <i>glut/</i> : header files of GLUT [used for input/output].
+		- <i>gtk+/</i> : header files of GTK+ [used for input/output], including gtkgl, a widget for OpenGL.
+		- <i>krd/</i> : '.krd' [scene graph] sample files.
+		- <i>ksp/</i> : '.ksp' [static geometry] sample files.
+		- <i>openil/</i> : header files of OpenIL [used by <b>Orion3D</b> to load images files].
+		- <i>orion3d/</i> : the source files of the orion3d engine (refer to \ref o3dsubfoder).
+		- <i>Orion3DMAX/</i> : the source files of Orion3DMAX, the plugin for 3DSMax4.
+		- <i>orionviewer/</i> : a sample program that used <b>Orion3D</b> [a ksp/krd/act/bsp viewer].
+		- <i>screenshots/</i> : some screenshots of programs that use <b>Orion3D</b>.
+		- <i>zlib/</i> : header files for zlib [used by <b>Orion3D</b> to handle zip archives].
+
+	\section o3dsubfoder orion3d/ sub-folder organisation
+	Here is a brief description of the sub-folder that can be found under the orion3d/ directory
+		- <i>objects/</i> : every OR_Object [mesh, camera, light, gizmo, ...]
+		- <i>hierarchy/</i>	: scene gaph [node and hierarchy].
+		- <i>bsp_portals/</i> : static geometry [ksp, quake3 bsp, portal].
+		- <i>shaders/</i> : shaders, alpha pipeline and texture class.
+		- <i>configuration/</i>	: configuration files.
+		- <i>misc/</i> : misc class [templates, types, constants, ...]
+		- <i>documentation/</i>	: files for documentation generation.
+		- <i>physics/</i> : physics management [forces, collision detection, collision response, ...].
+		- <i>input_output/</i> : input & output wrappers, viewport management.
+		- <i>animations/</i> : animation class [keyframes, track, animation, players, evaluator].
+		- <i>sound/</i> : sound engine.
+		- <i>maths/</i> : maths class [vector, matrix, quaternion ...].
+		- <i>utils/</i> : messages, log, performance, zip archive, file, datas.
+		- <i>opengl/</i> : opengl wrapper [extesion management, context management].
+		- <i>special_effects</i> : cool specials fx [particule engine, metaballs, ...].
+		- <i>./</i> : 'orion3d.h', 'orion3d.inl' & 'orion3d.cpp'.
+
+	\section binsubfolder binaries/ sub-folders organisation
+	Here is a brief decription of the organisation of the binaries/ folder :
+		- <i>orion3d_dll/</i> : orion3d dll, including different wrapper version (using glut, gtk, win32, etc).
+		- <i>orion3d_lib/</i> : orion3d libraries, including different wrapper version (using glut, gtk, win32, etc).
+		- <i>external_dll/</i> : external dll needed by oriond, including fmod, gtk, glut, openil zlib.
+		- <i>external_lib/</i> : external librairies needed by oriond, including fmod, gtk, glut, openil zlib.
+		- <i>3dsmax_plugins/</i> : Orion3DMax plugin for 3DStudioMAX r4. Put it in your <i>'plugins/'</i> directory of 3DSMax4.
+		  
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+//  Copyright (C) 2000-2001 The  Orion3D Rewiew Board                        // 
+//---------------------------------------------------------------------------//
+//	This file is under the Orion3D licence.                                //
+//  Refer to orion3d_licence.txt for more details about the Orion3D Licence. //
+//---------------------------------------------------------------------------//
+//  Ce fichier est soumis a la Licence Orion3D.                              //
+//  Se reporter a orion3d_licence.txt pour plus de details sur cette licence.//
+///////////////////////////////////////////////////////////////////////////////
+//                           END OF FILE                                     //
+///////////////////////////////////////////////////////////////////////////////

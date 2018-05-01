@@ -1,0 +1,533 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Orionviewer"="..\orionviewer\Orionviewer.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name wrapper_glut
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "alphapipeline_test"=".\alphapipeline_test\alphapipeline_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "animation_test"=".\animation_test\animation_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "cloth_test"=".\cloth_test\cloth_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "collision_test"=".\collision_test\collision_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "font_test"=".\font_test\font_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_font
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "glut_test"=".\glut_test\glut_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_glut
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "gtk_test"=".\gtk_test\gtk_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_gtk
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "joint_test"=".\joint_test\joint_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "lua_test"=".\lua_test\lua_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_lua
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "maths_test"=".\maths_test\maths_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_glut
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "mathsurf_test"=".\mathsurf_test\mathsurf_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "metaballs_test"=".\metaballs_test\metaballs_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "orion3d"="..\orion3d\orion3d.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name wrapper_font
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_lua
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name orion3d_maths
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "orion3d_maths"="..\orion3d\orion3d_maths\orion3d_maths.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "particles_test"=".\particles_test\particles_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "shell_test"=".\shell_test\shell_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_lua
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "skin_test"=".\skin_test\skin_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "string_test"=".\string_test\string_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "toolkit"="..\orion3d\toolkit\toolkit.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "win32_test"=".\win32_test\win32_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "wintext_test"=".\wintext_test\wintext_test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_wintext
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "wrapper_font"="..\ORION3D\wrapper_font\wrapper_font.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_glut"="..\orion3d\wrapper_glut\wrapper_glut.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_gtk"="..\orion3d\wrapper_gtk\wrapper_gtk.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_lua"="..\orion3d\wrapper_lua\wrapper_lua.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_win32"="..\orion3d\wrapper_win32\wrapper_win32.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_wintext"="..\orion3d\wrapper_wintext\wrapper_wintext.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

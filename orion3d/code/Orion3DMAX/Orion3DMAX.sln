@@ -1,0 +1,155 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Orion3DMAX", "Orion3DMAX.vcproj", "{C451B8CC-B275-4E4A-811E-43235AEA0EE1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "orion3d", "..\orion3d\orion3d.vcproj", "{0FC8305C-6255-4E06-8ADA-C2114B14F50C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "orion3d_maths", "..\orion3d\orion3d_maths\orion3d_maths.vcproj", "{C5A22075-88F1-456F-AC46-836F3ED67410}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "toolkit", "..\ORION3D\toolkit\toolkit.vcproj", "{5AF4A5E9-4852-4381-B866-F926EC10EF09}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrapper_font", "..\orion3d\wrapper_font\wrapper_font.vcproj", "{D3BFF086-9901-4DCB-981D-4D8F815B7F33}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrapper_glut", "..\Orion3d\wrapper_glut\wrapper_glut.vcproj", "{8694911E-7A0C-4130-A875-10EB8D751D7D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrapper_gtk", "..\Orion3d\wrapper_gtk\wrapper_gtk.vcproj", "{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrapper_lua", "..\ORION3D\wrapper_lua\wrapper_lua.vcproj", "{B623102F-6BBB-43A1-98B8-930C8C1191C5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrapper_win32", "..\Orion3d\wrapper_win32\wrapper_win32.vcproj", "{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Orionviewer", "..\orionviewer\Orionviewer.vcproj", "{EDF6C66E-6D72-42F0-BB3D-350F3104E893}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "skin_test", "..\samples\skin_test\skin_test.vcproj", "{34DB2A85-EC03-4771-8C36-A74ECD0146FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Debug Glut
+		ConfigName.2 = Hybrid
+		ConfigName.3 = Release
+		ConfigName.4 = Release Glut
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.0 = {94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.1 = {5AF4A5E9-4852-4381-B866-F926EC10EF09}
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.2 = {0FC8305C-6255-4E06-8ADA-C2114B14F50C}
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.0 = {C5A22075-88F1-456F-AC46-836F3ED67410}
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.1 = {B623102F-6BBB-43A1-98B8-930C8C1191C5}
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.Debug.ActiveCfg = Debug|Win32
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.Debug.Build.0 = Debug|Win32
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.Debug Glut.ActiveCfg = Debug|Win32
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.Debug Glut.Build.0 = Debug|Win32
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.Hybrid.ActiveCfg = Hybrid|Win32
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.Hybrid.Build.0 = Hybrid|Win32
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.Release.ActiveCfg = Release|Win32
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.Release.Build.0 = Release|Win32
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.Release Glut.ActiveCfg = Release|Win32
+		{C451B8CC-B275-4E4A-811E-43235AEA0EE1}.Release Glut.Build.0 = Release|Win32
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.Debug.ActiveCfg = Debug|Win32
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.Debug.Build.0 = Debug|Win32
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.Debug Glut.ActiveCfg = Debug|Win32
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.Debug Glut.Build.0 = Debug|Win32
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.Hybrid.ActiveCfg = Release|Win32
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.Hybrid.Build.0 = Release|Win32
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.Release.ActiveCfg = Release|Win32
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.Release.Build.0 = Release|Win32
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.Release Glut.ActiveCfg = Release|Win32
+		{0FC8305C-6255-4E06-8ADA-C2114B14F50C}.Release Glut.Build.0 = Release|Win32
+		{C5A22075-88F1-456F-AC46-836F3ED67410}.Debug.ActiveCfg = Debug|Win32
+		{C5A22075-88F1-456F-AC46-836F3ED67410}.Debug.Build.0 = Debug|Win32
+		{C5A22075-88F1-456F-AC46-836F3ED67410}.Debug Glut.ActiveCfg = Debug|Win32
+		{C5A22075-88F1-456F-AC46-836F3ED67410}.Debug Glut.Build.0 = Debug|Win32
+		{C5A22075-88F1-456F-AC46-836F3ED67410}.Hybrid.ActiveCfg = Debug|Win32
+		{C5A22075-88F1-456F-AC46-836F3ED67410}.Hybrid.Build.0 = Debug|Win32
+		{C5A22075-88F1-456F-AC46-836F3ED67410}.Release.ActiveCfg = Release|Win32
+		{C5A22075-88F1-456F-AC46-836F3ED67410}.Release.Build.0 = Release|Win32
+		{C5A22075-88F1-456F-AC46-836F3ED67410}.Release Glut.ActiveCfg = Release|Win32
+		{C5A22075-88F1-456F-AC46-836F3ED67410}.Release Glut.Build.0 = Release|Win32
+		{5AF4A5E9-4852-4381-B866-F926EC10EF09}.Debug.ActiveCfg = Debug|Win32
+		{5AF4A5E9-4852-4381-B866-F926EC10EF09}.Debug.Build.0 = Debug|Win32
+		{5AF4A5E9-4852-4381-B866-F926EC10EF09}.Debug Glut.ActiveCfg = Debug|Win32
+		{5AF4A5E9-4852-4381-B866-F926EC10EF09}.Debug Glut.Build.0 = Debug|Win32
+		{5AF4A5E9-4852-4381-B866-F926EC10EF09}.Hybrid.ActiveCfg = Release|Win32
+		{5AF4A5E9-4852-4381-B866-F926EC10EF09}.Hybrid.Build.0 = Release|Win32
+		{5AF4A5E9-4852-4381-B866-F926EC10EF09}.Release.ActiveCfg = Release|Win32
+		{5AF4A5E9-4852-4381-B866-F926EC10EF09}.Release.Build.0 = Release|Win32
+		{5AF4A5E9-4852-4381-B866-F926EC10EF09}.Release Glut.ActiveCfg = Release|Win32
+		{5AF4A5E9-4852-4381-B866-F926EC10EF09}.Release Glut.Build.0 = Release|Win32
+		{D3BFF086-9901-4DCB-981D-4D8F815B7F33}.Debug.ActiveCfg = Debug|Win32
+		{D3BFF086-9901-4DCB-981D-4D8F815B7F33}.Debug.Build.0 = Debug|Win32
+		{D3BFF086-9901-4DCB-981D-4D8F815B7F33}.Debug Glut.ActiveCfg = Debug|Win32
+		{D3BFF086-9901-4DCB-981D-4D8F815B7F33}.Debug Glut.Build.0 = Debug|Win32
+		{D3BFF086-9901-4DCB-981D-4D8F815B7F33}.Hybrid.ActiveCfg = Debug|Win32
+		{D3BFF086-9901-4DCB-981D-4D8F815B7F33}.Hybrid.Build.0 = Debug|Win32
+		{D3BFF086-9901-4DCB-981D-4D8F815B7F33}.Release.ActiveCfg = Release|Win32
+		{D3BFF086-9901-4DCB-981D-4D8F815B7F33}.Release.Build.0 = Release|Win32
+		{D3BFF086-9901-4DCB-981D-4D8F815B7F33}.Release Glut.ActiveCfg = Release|Win32
+		{D3BFF086-9901-4DCB-981D-4D8F815B7F33}.Release Glut.Build.0 = Release|Win32
+		{8694911E-7A0C-4130-A875-10EB8D751D7D}.Debug.ActiveCfg = Debug|Win32
+		{8694911E-7A0C-4130-A875-10EB8D751D7D}.Debug.Build.0 = Debug|Win32
+		{8694911E-7A0C-4130-A875-10EB8D751D7D}.Debug Glut.ActiveCfg = Debug|Win32
+		{8694911E-7A0C-4130-A875-10EB8D751D7D}.Debug Glut.Build.0 = Debug|Win32
+		{8694911E-7A0C-4130-A875-10EB8D751D7D}.Hybrid.ActiveCfg = Release|Win32
+		{8694911E-7A0C-4130-A875-10EB8D751D7D}.Hybrid.Build.0 = Release|Win32
+		{8694911E-7A0C-4130-A875-10EB8D751D7D}.Release.ActiveCfg = Release|Win32
+		{8694911E-7A0C-4130-A875-10EB8D751D7D}.Release.Build.0 = Release|Win32
+		{8694911E-7A0C-4130-A875-10EB8D751D7D}.Release Glut.ActiveCfg = Release|Win32
+		{8694911E-7A0C-4130-A875-10EB8D751D7D}.Release Glut.Build.0 = Release|Win32
+		{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}.Debug.ActiveCfg = Debug|Win32
+		{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}.Debug.Build.0 = Debug|Win32
+		{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}.Debug Glut.ActiveCfg = Debug|Win32
+		{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}.Debug Glut.Build.0 = Debug|Win32
+		{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}.Hybrid.ActiveCfg = Release|Win32
+		{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}.Hybrid.Build.0 = Release|Win32
+		{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}.Release.ActiveCfg = Release|Win32
+		{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}.Release.Build.0 = Release|Win32
+		{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}.Release Glut.ActiveCfg = Release|Win32
+		{3504CC0C-CB31-45FD-86E3-FFCE91A265E3}.Release Glut.Build.0 = Release|Win32
+		{B623102F-6BBB-43A1-98B8-930C8C1191C5}.Debug.ActiveCfg = Debug|Win32
+		{B623102F-6BBB-43A1-98B8-930C8C1191C5}.Debug.Build.0 = Debug|Win32
+		{B623102F-6BBB-43A1-98B8-930C8C1191C5}.Debug Glut.ActiveCfg = Debug|Win32
+		{B623102F-6BBB-43A1-98B8-930C8C1191C5}.Debug Glut.Build.0 = Debug|Win32
+		{B623102F-6BBB-43A1-98B8-930C8C1191C5}.Hybrid.ActiveCfg = Debug|Win32
+		{B623102F-6BBB-43A1-98B8-930C8C1191C5}.Hybrid.Build.0 = Debug|Win32
+		{B623102F-6BBB-43A1-98B8-930C8C1191C5}.Release.ActiveCfg = Release|Win32
+		{B623102F-6BBB-43A1-98B8-930C8C1191C5}.Release.Build.0 = Release|Win32
+		{B623102F-6BBB-43A1-98B8-930C8C1191C5}.Release Glut.ActiveCfg = Release|Win32
+		{B623102F-6BBB-43A1-98B8-930C8C1191C5}.Release Glut.Build.0 = Release|Win32
+		{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}.Debug.ActiveCfg = Debug|Win32
+		{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}.Debug.Build.0 = Debug|Win32
+		{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}.Debug Glut.ActiveCfg = Debug|Win32
+		{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}.Debug Glut.Build.0 = Debug|Win32
+		{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}.Hybrid.ActiveCfg = Release|Win32
+		{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}.Hybrid.Build.0 = Release|Win32
+		{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}.Release.ActiveCfg = Release|Win32
+		{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}.Release.Build.0 = Release|Win32
+		{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}.Release Glut.ActiveCfg = Release|Win32
+		{94E850C7-1E7F-4E56-9B4E-CED70E0F1F5F}.Release Glut.Build.0 = Release|Win32
+		{EDF6C66E-6D72-42F0-BB3D-350F3104E893}.Debug.ActiveCfg = Debug Glut|Win32
+		{EDF6C66E-6D72-42F0-BB3D-350F3104E893}.Debug.Build.0 = Debug Glut|Win32
+		{EDF6C66E-6D72-42F0-BB3D-350F3104E893}.Debug Glut.ActiveCfg = Debug Glut|Win32
+		{EDF6C66E-6D72-42F0-BB3D-350F3104E893}.Debug Glut.Build.0 = Debug Glut|Win32
+		{EDF6C66E-6D72-42F0-BB3D-350F3104E893}.Hybrid.ActiveCfg = Debug Glut|Win32
+		{EDF6C66E-6D72-42F0-BB3D-350F3104E893}.Hybrid.Build.0 = Debug Glut|Win32
+		{EDF6C66E-6D72-42F0-BB3D-350F3104E893}.Release.ActiveCfg = Release Glut|Win32
+		{EDF6C66E-6D72-42F0-BB3D-350F3104E893}.Release.Build.0 = Release Glut|Win32
+		{EDF6C66E-6D72-42F0-BB3D-350F3104E893}.Release Glut.ActiveCfg = Release Glut|Win32
+		{EDF6C66E-6D72-42F0-BB3D-350F3104E893}.Release Glut.Build.0 = Release Glut|Win32
+		{34DB2A85-EC03-4771-8C36-A74ECD0146FD}.Debug.ActiveCfg = Debug|Win32
+		{34DB2A85-EC03-4771-8C36-A74ECD0146FD}.Debug.Build.0 = Debug|Win32
+		{34DB2A85-EC03-4771-8C36-A74ECD0146FD}.Debug Glut.ActiveCfg = Debug|Win32
+		{34DB2A85-EC03-4771-8C36-A74ECD0146FD}.Debug Glut.Build.0 = Debug|Win32
+		{34DB2A85-EC03-4771-8C36-A74ECD0146FD}.Hybrid.ActiveCfg = Release|Win32
+		{34DB2A85-EC03-4771-8C36-A74ECD0146FD}.Hybrid.Build.0 = Release|Win32
+		{34DB2A85-EC03-4771-8C36-A74ECD0146FD}.Release.ActiveCfg = Release|Win32
+		{34DB2A85-EC03-4771-8C36-A74ECD0146FD}.Release.Build.0 = Release|Win32
+		{34DB2A85-EC03-4771-8C36-A74ECD0146FD}.Release Glut.ActiveCfg = Release|Win32
+		{34DB2A85-EC03-4771-8C36-A74ECD0146FD}.Release Glut.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

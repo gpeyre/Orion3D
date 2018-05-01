@@ -1,0 +1,84 @@
+a:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #0000c0;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #0000c0;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+a:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #f00000;
+	text-decoration: none;
+}
+
+.justified {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: justify;
+}
+
+.left {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+}
+
+.right {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: right;
+}
+
+.centered {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
+TD {
+	font-size: 10pt;
+}
+
+BODY {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: justify;
+	font-size: 10pt;
+	background-color: white;
+}
+
+H1 {
+	font-size: 14pt;
+}
+
+H2 {
+	font-weight: bold;
+	font-size: 12pt;
+	color: #800000
+}
+
+hr {
+    hr-size: 2;
+	color: #000000
+}
+
+.comment {
+	color: #008000
+}
+
+.keyword {
+	color: #800080;
+	font-weight: bold;
+}
+
+.keywordtype {
+	color: #800080;
+	font-weight: bold;
+}
+
+.preprocessor {
+    color: #202020;
+	font-weight: bold;
+}

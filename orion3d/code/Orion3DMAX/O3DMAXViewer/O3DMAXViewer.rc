@@ -1,0 +1,364 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// French (France) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+#ifdef _WIN32
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_DIALOG_VIEWER, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 105
+        VERTGUIDE, 54
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 288
+    END
+
+    IDD_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 171
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 106
+    END
+
+    IDD_TREEVIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 105
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 271
+    END
+
+    IDD_ADDPARAM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_MODPARAM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 211
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 40
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_VIEWER DIALOGEX 0, 0, 108, 291
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "Update",IDC_PUSH,7,53,91,15
+    PUSHBUTTON      "",IDC_MINIMIZE,69,3,11,10,BS_ICON | BS_CENTER | 
+                    BS_VCENTER
+    PUSHBUTTON      "",IDC_MAXIMIZE,81,3,11,10,BS_ICON | BS_CENTER | 
+                    BS_VCENTER
+    PUSHBUTTON      "",IDC_CLOSE,93,3,11,10,BS_ICON | BS_CENTER | BS_VCENTER
+    CONTROL         "",IDC_FILLED,"Button",BS_AUTORADIOBUTTON | BS_ICON | 
+                    BS_CENTER | BS_VCENTER | BS_PUSHLIKE | WS_GROUP | 
+                    WS_TABSTOP,3,3,13,13
+    CONTROL         "",IDC_WIRE,"Button",BS_AUTORADIOBUTTON | BS_ICON | 
+                    BS_CENTER | BS_VCENTER | BS_PUSHLIKE | WS_TABSTOP,17,3,
+                    13,13
+    CONTROL         "",IDC_POINT,"Button",BS_AUTORADIOBUTTON | BS_ICON | 
+                    BS_CENTER | BS_VCENTER | BS_PUSHLIKE | WS_TABSTOP,31,3,
+                    13,13
+    COMBOBOX        IDC_SELECTVIEW,26,184,79,109,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Play/Pause",IDC_PLAYPAUSE,3,170,11,10,BS_ICON | 
+                    BS_CENTER | BS_VCENTER
+    CONTROL         "Slider1",IDC_TIMESLIDER,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,15,170,90,11
+    CONTROL         "&Lights",IDC_DISPLIGHTS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,211,35,10
+    CONTROL         "Local &axes",IDC_DISPAXES,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,54,211,50,10
+    CONTROL         "&Cameras",IDC_DISPCAMERAS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,222,43,10
+    CONTROL         "&Gizmos",IDC_DISPGIZMOS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,54,222,39,10
+    PUSHBUTTON      "About Orion3DMAX Viewer",IDC_ABOUT,3,273,102,15
+    LTEXT           "Mesh(es)",IDC_STATIC,19,249,30,8
+    RTEXT           "000",IDC_NBMESHES,3,249,13,8,0,WS_EX_TRANSPARENT
+    RTEXT           "000",IDC_NBLIGHTS,57,249,13,8,0,WS_EX_TRANSPARENT
+    LTEXT           "Light(s)",IDC_STATIC,19,260,24,8
+    RTEXT           "000",IDC_NBCAMERAS,3,260,13,8,0,WS_EX_TRANSPARENT
+    LTEXT           "Camera(s)",IDC_STATIC,73,249,32,8
+    RTEXT           "000",IDC_NBGIZMOS,57,260,13,8,0,WS_EX_TRANSPARENT
+    LTEXT           "Gizmo(s)",IDC_STATIC,77,260,28,8
+    GROUPBOX        "Display :",IDC_STATIC,3,201,102,45
+    CONTROL         "Always on top",IDC_TOPMOST,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,3,144,60,10
+    CONTROL         "Bind time to 3DSMAX time",IDC_BINDTIME,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,3,156,99,10
+    CONTROL         "Traj's",IDC_DISPTRAJ,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,233,33,10
+    CONTROL         "Bones",IDC_DISPBONES,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,54,233,36,10
+    PUSHBUTTON      "View :",IDC_UPDATEVIEW,3,184,22,12,BS_CENTER | 
+                    BS_VCENTER
+    CONTROL         "Materials",IDC_UPDATE_MATERIALS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,29,44,10,
+                    WS_EX_TRANSPARENT
+    GROUPBOX        "Update",IDC_STATIC,3,19,102,53
+    CONTROL         "Objects",IDC_UPDATE_OBJECTS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,54,41,40,10
+    CONTROL         "Animations",IDC_UPDATE_ANIMS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,54,29,50,10
+    CONTROL         "Matrices",IDC_UPDATE_MATRICES,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,41,43,10
+    GROUPBOX        "Sampling",IDC_STATIC,3,74,102,67
+    CONTROL         "Force sampling",IDC_SAMPLING_FORCE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,110,63,10
+    EDITTEXT        IDC_SAMPLING_RATE,67,95,32,11,ES_RIGHT | ES_AUTOHSCROLL
+    EDITTEXT        IDC_SAMPLING_TRESHOLD,67,82,32,12,ES_RIGHT | 
+                    ES_AUTOHSCROLL
+    LTEXT           "Treshold :",IDC_STATIC,7,86,32,8
+    LTEXT           "Keys per second :",IDC_STATIC,7,98,58,8
+    LTEXT           "To",IDC_STATIC,48,126,10,8
+    EDITTEXT        IDC_SAMPLING_END,61,123,38,12,ES_RIGHT | ES_AUTOHSCROLL
+    EDITTEXT        IDC_SAMPLING_START,7,123,38,12,ES_RIGHT | ES_AUTOHSCROLL
+    PUSHBUTTON      "",IDC_CONSOLE,48,3,16,13,BS_ICON | BS_CENTER | 
+                    BS_VCENTER
+END
+
+IDD_ABOUT DIALOGEX 0, 0, 176, 111
+STYLE DS_SYSMODAL | DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | 
+    WS_MAXIMIZEBOX | WS_VISIBLE | WS_CAPTION
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "About Orion3DMAX"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "What a beautiful logo !",IDOK,88,89,83,17
+    LTEXT           "Orion3DMAX  : Antoche",IDC_STATIC,4,55,77,8
+    LTEXT           "Orion3D : Nikopol0 && Antoche",IDC_STATIC,4,66,96,8
+    LTEXT           "Visit the Orion3D website at http://www.orion3d.fr.st",
+                    IDC_STATIC,4,77,165,8
+    LTEXT           "antoche@altern.org nikopol0@altern.org",IDC_STATIC,4,89,
+                    78,17
+    CONTROL         123,IDC_STATIC,"Static",SS_BITMAP,4,5,168,47
+END
+
+IDD_TREEVIEW DIALOGEX 0, 0, 108, 274
+STYLE DS_CENTER | WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Tree2",IDC_TREE,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_SHOWSELALWAYS | TVS_TRACKSELECT | 
+                    WS_BORDER | WS_TABSTOP,3,3,102,102
+    CONTROL         "All",IDC_EXPORTALL,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED | WS_GROUP,10,117,23,10
+    CONTROL         "Selected",IDC_EXPORTSELECTED,"Button",
+                    BS_AUTORADIOBUTTON | WS_DISABLED,10,128,44,10
+    CONTROL         "Selected + subtree",IDC_EXPORTSUBTREE,"Button",
+                    BS_AUTORADIOBUTTON | WS_DISABLED,10,139,75,10
+    PUSHBUTTON      "Geometry",IDC_EXPORTGEOM,9,151,42,14
+    CONTROL         "List1",IDC_PROPERTIES,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_AUTOARRANGE | WS_DISABLED | 
+                    WS_BORDER | WS_TABSTOP,3,192,102,79,WS_EX_CLIENTEDGE
+    GROUPBOX        "Export",IDC_STATIC,3,107,102,63,BS_LEFT,
+                    WS_EX_TRANSPARENT
+    PUSHBUTTON      "Animation",IDC_EXPORTANIM,56,151,43,14
+    PUSHBUTTON      "Add",IDC_ADDPARAM,3,174,47,14,WS_DISABLED
+    PUSHBUTTON      "Del",IDC_DELPARAM,54,174,51,14,WS_DISABLED
+END
+
+IDD_ADDPARAM DIALOGEX 0, 0, 186, 95
+STYLE DS_SYSMODAL | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Add a user param"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_PARAMNAME,7,19,110,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_PARAMTYPE,7,44,172,36,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PARAMDATA,7,68,172,20,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    WS_VSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+    LTEXT           "Type :",IDC_STATIC,7,33,21,8
+    LTEXT           "Name :",IDC_STATIC,7,7,24,8
+    LTEXT           "Default value :",IDC_STATIC,7,59,47,8
+END
+
+IDD_MODPARAM DIALOGEX 0, 0, 218, 47
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Modify parameter"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,161,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,161,24,50,14
+    EDITTEXT        IDC_PARAMDATA,7,7,150,33,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    WS_VSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_FILLED              ICON    DISCARDABLE     "filled.ico"
+IDI_WIRE                ICON    DISCARDABLE     "wire.ico"
+IDI_POINT               ICON    DISCARDABLE     "point.ico"
+IDI_MINIMIZE            ICON    DISCARDABLE     "reduce.ico"
+IDI_MAXIMIZE            ICON    DISCARDABLE     "ico00001.ico"
+IDI_CLOSE               ICON    DISCARDABLE     "icon1.ico"
+IDI_RESTORE             ICON    DISCARDABLE     "ico00002.ico"
+IDI_PLAY                ICON    DISCARDABLE     "ico00003.ico"
+IDI_PAUSE               ICON    DISCARDABLE     "icon2.ico"
+IDI_CONSOLE             ICON    DISCARDABLE     "ico00004.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LOGO250             BITMAP  DISCARDABLE     "logoblue.bmp"
+IDB_GIZMO               BITMAP  DISCARDABLE     "bitmap1.bmp"
+IDB_MESH                BITMAP  DISCARDABLE     "bitmap2.bmp"
+IDB_SELECTED            BITMAP  DISCARDABLE     "bmp00001.bmp"
+IDB_CAMERA              BITMAP  DISCARDABLE     "bmp00003.bmp"
+IDB_LIGHT               BITMAP  DISCARDABLE     "bmp00004.bmp"
+IDB_UNKNOWN             BITMAP  DISCARDABLE     "bmp00002.bmp"
+IDB_USERDATA            BITMAP  DISCARDABLE     "bmp00005.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_ADDPARAM DLGINIT
+BEGIN
+    IDC_PARAMTYPE, 0x403, 17, 0
+0x6e55, 0x6973, 0x6e67, 0x6465, 0x4920, 0x746e, 0x6765, 0x7265, "\000" 
+    IDC_PARAMTYPE, 0x403, 7, 0
+0x7453, 0x6972, 0x676e, "\000" 
+    0
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,1,0,0
+ PRODUCTVERSION 0,1,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040c04b0"
+        BEGIN
+            VALUE "Comments", "Release version 0.1 for 3D Studio MAX 4\0"
+            VALUE "CompanyName", "Orion3D Team\0"
+            VALUE "FileDescription", "Orion3DMax\0"
+            VALUE "FileVersion", "0, 1, 0, 0\0"
+            VALUE "InternalName", "Orion3DMax\0"
+            VALUE "LegalCopyright", "Copyright © 2001\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "Orion3DMax.dle\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "Orion3DMax\0"
+            VALUE "ProductVersion", "0, 1, 0, 0\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x40c, 1200
+    END
+END
+
+#endif    // !_MAC
+
+#endif    // French (France) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

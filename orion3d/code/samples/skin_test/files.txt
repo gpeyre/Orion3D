@@ -1,0 +1,3 @@
+../krd/ours.krd|../act/ours.act
+../krd/dragon.krd|../act/dragon.act
+../krd/head.krd|../act/head.act

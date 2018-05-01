@@ -1,0 +1,80 @@
+/*!
+	\mainpage	Orion3D Source Code Documentation
+
+	\image html logo.jpg 
+              
+    	\section	orion3d What is Orion3D ?
+			<b><b>Orion3D</b></b> is a portable 3D engine using OpenGL and advanced
+			rendering techniques such as Portals, PVS, BSP, hierarchical
+			animations, particules systems, etc... visit http://www.orion3d.fr.st
+			for up-to-date informations about <b><b>Orion3D</b></b>.
+
+	\section carac The engine caracteristics
+
+			Here is a quick overview of Orion3D main caracteristics :
+				- Fully object oriented :
+					- Abstration of the API used (OpenGL, input or output functions calls are "encapsulated").
+					- Heavy use of inheritance and templates to reduce the number of code lines.
+					- Use of C++ STL templates.
+					- Uniform handling of different elements via the use of managers.
+				- All OpenGL basic features :
+					- Geometric transformations.
+					- Per vertex lighting.
+					- Static fog.
+					- Camera deplacement with 6 DOF.
+				- Special effects librarie :
+					- Complex particule system, integrated in the physic engine (allows constraints, deflectors ...).
+					- Iso-surface computations, to create effects such as meta-balls.
+					- Symplified physic computation to achieve special effects (bounce, deflexion ...).
+				- Hierarchical animation of objects :
+					- Dynamical objects (mesh, lights, cameras, gizmos, ...) are stored in a scene graph.
+					- They can be loaded from propriatary optimised '.krd' format.
+				- Hierachical animation of objects :
+					- Objects (mesh, lights, cameras, gizmos, ...) are stored in a scene graph, in a hierarchical maner.
+					- They can be loaded from proprietary file format \c .krd.
+					- Animation can be exported from 3DSMax and loded on parts of the graph.
+				- Special management of static geometry :
+					- Support for portal rendering.
+					- Use BSP-tree for fast intersection queries (collision, ray-trace ...).
+					- Static datas can be exported to / loaded from a proprietary file format, \c .ksp.
+					- Support for BSP file of \b Quake3.
+				- General shader support :
+					- Powerful system that enable creation of original shaders.
+					- Can load various file format (\c .jpg, \c .bmp, \c .tga, \c .png ...).
+					- Support for basic default shader (including reflection, bump, etc).
+				- Lots of annex wrapper to simplify :
+					- Management of input/output (including \b Glut, \b GTK, \b Win32 wrapper ...).
+					- Wrapper for \b LUA scrippting language.
+					- Sound wrapper for \b fmod.
+				- Orion3DMAX, a plugin for 3DSMas, that allows :
+					- Export of animations and scene graph.
+					- Compilation and export of static geometry.
+					- Pre-visualisation of the scene with Orion3D.
+					- Pre-visualisation of the animation with Orion3D.
+				- And last but not least, a complete documentation, in english.
+
+		\section struct Structure of the engine
+			- The engine is written in C++, and is strongly object oriented.
+			- Templates and inheritance is heavily used to produce clear and compact code.
+			- Every object can be serialized from/into a file.
+			- Code should be ported in other plateforms (including Unix and MacOS) without dificulties.
+
+		\section lcence Licence
+			This whole \b Orion3D distribution is under the Orion3D licence.
+			Refer to \ref pagelicence for more details about the Orion3D Licence
+							
+    	\section	author Homepage and up-to-date informations
+			Visit the \b Orion3D homepage : <A HREF="http://www.orion3d.fr">www.orion3d.fr</A>.
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+//  Copyright (C) 2000-2001 The  Orion3D Rewiew Board                        // 
+//---------------------------------------------------------------------------//
+//	This file is under the Orion3D licence.                                //
+//  Refer to orion3d_licence.txt for more details about the Orion3D Licence. //
+//---------------------------------------------------------------------------//
+//  Ce fichier est soumis a la Licence Orion3D.                              //
+//  Se reporter a orion3d_licence.txt pour plus de details sur cette licence.//
+///////////////////////////////////////////////////////////////////////////////
+//                           END OF FILE                                     //
+///////////////////////////////////////////////////////////////////////////////

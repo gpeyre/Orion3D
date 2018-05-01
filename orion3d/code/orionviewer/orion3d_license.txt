@@ -1,0 +1,56 @@
+######################################################################
+#                     orion3d_license.txt                            #
+######################################################################
+
+                       -==[ Orion3D ]==-
+
+                       www.orion3d.fr.st
+
+######################################################################
+#                           français                                 #
+######################################################################
+
+ATTENTION : pour l'instant, cette licence n'a qu'une valeur morale.
+Tant que la licence definitive n'est pas publiée, toute redistribution
+des sources est interdite sans un accord ecrit d'un membre d'Orion3D.
+
+1-Domaine d'application de la licence :
+
+  - Cette license s'applique a tous les fichiers d'Orion3D, ie. les
+  fichiers portant la note en bas de page :
+	Copyright (C) 2000-2001 The Orion3D Rewiew Board 
+  plus les fichiers binaires :
+               orion3d.dll, orion3d.lib,
+               krd_exporter.dle, ksp_exporter.dle
+  - Tous les autres fichiers [fichiers d'exemples ainsi que orionviewer]
+  livrés avec la distribution sont libres de droits.
+
+2-Re-distribution d'Orion3D
+  - Il est interdit de redistribuer des fichiers modifiés d'Orion3D.
+  - Il est autorisé de redistribuer les sources originales d'Orion3D,
+  a condition d'inclure cette presente licence.
+
+3-Utilisation privée d'Orion3D :
+  - Il est autorisé de ditribuer des programmes utilisant les binaires
+  originaux d'Orion3D, si ces programmes sont gratuits et libres de droits.
+  - Il est autorisé de modifier les sources d'Orion3D uniquement a des fins
+  personnelles.
+
+4-Utilisation commerciale d'Orion3D :
+  - Toute utilisation commerciale [redistribution, modification ou 
+  utilisation] d'Orion3D est interdite sans un accord ecrit d'un membre
+  d'Orion3D.
+
+5-Membres d'Orion3D :
+  - Sont considérés comme membres d'Orion3D les personnes inscrits comme administrateurs
+  sur le projet "Orion3D" de www.sourceforge.com
+  - Une liste contractuelle est disponible sur le site www.orion3d.fr.st
+  - Liste non contractuelle :
+       * Gabriel PEYRE
+       * Antoine BOUTHORS
+       * Rakan EL-KHALIL
+
+
+######################################################################
+#                            english                                 #
+######################################################################

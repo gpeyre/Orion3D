@@ -1,0 +1,122 @@
+/*! 
+	\page pagephysic Orion3D physic engine
+		In this page, we will give an in-depth explanation of how the design of the \b Orion3D
+		physic engine. We will not review the maths and physic derivations of how all this stuff
+		works. This is up to you to read the inline documentation (formula are always 
+		expanded).
+
+
+	\section	physicoverview A brief overview
+
+  	\subsection physicwhat What is a physic engine ?
+
+	\subsection physicwhat Orion3D physic engine main features
+		The main feature of this physic engine is it's modularity.
+		It is fully object oriented, and it's easy to derive new class 
+		and implement new forces, constraints, etc. Althought it is not really optimised yet, 
+		it use powerfull maths algorithms (sparse systems resolution, etc), and should be easy 
+		to tuned for real time applications.
+
+		Here are the main layers of the physic engine :
+			- build on top of \b Orion3D :
+				- rigid bodies can be linked to \b Orion3D objects.
+				- particules systems can be overloaded to produce special effects (cloth, fountains ...).
+			- classical forward dynamics resolutions :
+				- Forces system : support for various kind of forces.
+				- Different integrators for the equations of movement (Euler, RK4, Verlet).
+			- colliding contact resolution :
+				- allow multiple kind of primitive collision (rigid body, particules system, gizmo).
+				- use of \b OPCODE library for rigid body versus rigid body collision check.
+			- constraint resolution between rigid body :
+				- use \b Lagrange \b multiplier velocity based model 
+				- different joint primitive (spherical, hinge, etc) for simulating articulated rigid body structures.
+			- particule system management :
+				- resolution of equation of movement for the particules.
+				- allow for various use of the system (cloth simulation, flow rendering, etc).
+
+
+
+
+
+	\section	rigidbody	The rigid body
+
+	\subsection whatisrb	What is a rigid body ?
+
+	\subsection linkrb		How to link a rigid body with \b Orion3D object ?
+
+
+
+
+	\section	particulessystem Particules system
+
+	\subsection whatispart	What is a particules system ?
+	
+		A particule system is a list of poncutal particules (class OR_Particule), that move according
+		to ponctual mecanics.
+
+	\subsection linkpart	How to use a particule system ?
+
+
+
+
+	\section	collisiondetection	Collision detection
+
+	\subsection  collider The different kind of colliders
+	
+		To track the collision between two objects
+		(called the collidees), \b Orion3D uses colliders. According to 
+		the kind of objects pairs, there are for the moment two main different colliders :
+			- Rigid body colliders : track collisions between too rigid objects, of class 
+			\c OR_RigidBody. The class of this collider is \c OR_RigidBodyCollider.
+			- Deflector collider : track collisions between a deflector (ie. a class deriving
+			from the abstract class \c OR_Deflector_ABC) and a particule system (class \c OR_ParticuleManager
+			or a derivated class such as \c OR_ParticuleSystem).
+		
+		All collider inherit from base class \c OR_Collider_ABC and have to overload mainly one method :
+		\begincode
+		virtual void PerformCollisionDetection( OR_CollisionManager& CollisionManager )=0;
+		\endcode
+		This is the method that is called by the physic engine (in fact by the manager of colliders)
+		to resolve the collision between the two collidee.
+		
+		The main advantage of using collider is to provide a high level control over the way collision
+		is performed. For example, collision between to object can easyly be turn on/off simply by disabling
+		the collider (a complete list of such methods are provided by \c OR_Collider_ABC).
+		
+	\subsection  rbcolliders The rigid body colliders 
+	
+		The rigid body collider use \c OPCODE collision detection library to check the collisions 
+		between its two rigid body collidee. To perform this task, it keeps in its internal two \c OPCODE
+		objects that tracks the relative positions of the two rigid body :
+			- \c AABBTreeCollider : this keeps track of the collision states between the two objects.
+			To access the data of the two rigid body (mainly the vertex of the mesh that supports 
+			the rigid body), we assign to the TreeCollider a callback method.
+			- \c BVTCache : this cache is used by \b OPCODE to access it's information about the two objects.
+			This information is packed in an opcode model (class OPCODE_Model).
+			
+		The rigid body collider, at its creation, is responsible for insitializing these both object
+		(linking the cache with the \b OPCODE model, set up the tree collider options, ...).
+
+	\subsection  physicmodel Linkage between Orion3D and OPCODE
+	
+		There are two kind of datas that OPCODE used : 
+			- the datas that are common to a pair of collidde. This is the tree collider (\c AABBTreeCollider) and 
+			the collision cache (\c BVTCache). These datas are kept inside the rigid body colliders.
+			- the datas that are proper to each object. These data are stored by \b OPCODE in an \b OPCODE_Model,
+			and are encapsulated by \b Orion3D in a class named \c OR_PhysicModel.
+			
+		The class \c OR_PhysicModel links the \b OPCODE model with \b Orion3D mesh. An \c OR_PhysicModel
+		must be specified for each rigid body (class OR_RigidBody) that is used in a rigid body collider.
+
+	\subsection  collidermanager The collision manager
+
+	
+	\section   constraintresolution Constraint resolution
+
+	\subsection whatisconstr What is a constraint ?
+
+	\subsection whatisjoint What is a joint ?
+
+	\subsection jointmanager The joint manager
+
+*/

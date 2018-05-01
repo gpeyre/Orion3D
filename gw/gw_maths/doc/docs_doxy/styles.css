@@ -1,0 +1,124 @@
+/* Style Sheet Last updated - 10/17/2000 */ 
+/* This style sheet is for IE 4.02 and up */ 
+
+
+/* BODY = default paragraph font */ 
+	body		{bgcolor: #ffffff; font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 80%; }
+
+
+/* HYPERLINKS */ 
+	a:link, a:visited	{color: "#0000FF"; text-decoration:"none"; }
+	a:active, a:hover	{color: "#990099"; cursor:hand;text-decoration:"underline"; }
+	.pop		{text-decoration: none; }
+	A.qindex {}
+	A.qindexRef {}
+	A.el { text-decoration: none; font-weight: bold }
+	A.elRef { font-weight: bold }
+	A.code { text-decoration: none; font-weight: normal; color: #4444ee }
+	A.codeRef { font-weight: normal; color: #4444ee }
+	A:hover { text-decoration: none; background-color: #f2f2ff }
+
+
+/* LISTS */ 
+	ol		{font-size: 100%; margin-top: .5em; margin-bottom: 0em; margin-left: 4em;}
+	ul		{font-size: 100%; margin-top: .5em; margin-bottom: 0em;}
+	ol ul		{list-style: disc; margin-top: .5em;}
+	ul ul		{list-style: disc; margin-top: .5em;}
+	li		{margin-bottom: .7em; margin-left: -2em;}
+
+	
+/* TABLES */ 
+	table	{font-size: 100%; margin-top: 1em; margin-bottom: 0em;}
+	th		{text-align: left; background: #CCCCCC; margin: .25em; vertical-align: bottom;}
+	tr		{vertical-align: top;}
+	td		{margin: .25em; vertical-align: top; border-bottom: 1  }
+	td.md 	{ background-color: #f2f2ff; font-weight: bold; }
+	td.mdname1 { background-color: #f2f2ff; font-weight: bold; color: #602020; }
+	td.mdname { background-color: #f2f2ff; font-weight: bold; color: #602020; width: 600px; }
+
+/* PARAGRAPH */
+	p		{margin-top: .6em; margin-bottom: .6em; }
+
+/* Heading styles---------------------------------------------------------------------------- */ 
+
+	h1		{font-size: 200%; margin-top: .4em; margin-bottom: .5em; text-align: center;}
+	h2		{font-size: 150%; margin-top: 2em; margin-bottom: .5em;}
+	h3		{font-size: 120%; margin-top: 1.2em; margin-bottom: .5em; font-weight: bold;}
+	h4		{font-size: 110%; margin-top: 1.2em; font-weight: bold;}
+	h5		{font-size: 100%; margin-top: 1.2em; font-weight: bold;}
+	.lproch		{font-weight: bold ;margin-top: 1.2em; }/* Heading 9,List Procedure Heading,lproch */ 
+
+/* Defined List styles ----------------------------------------------------------------------- */
+
+	dt		{font-weight: bold; }
+	dd		{margin-left: 2em; margin-bottom: .6em; }
+
+
+
+
+/*--------------------------------------------------------------------------------------------------*/
+/* doxygen specific stuff */
+
+DL.el { margin-left: -1cm }
+DIV.fragment { width: 100%; border: none; background-color: #eeeeee }
+DIV.ah { background-color: black; font-weight: bold; color: #ffffff; margin-bottom: 3px; margin-top: 3px }
+TD.md { background-color: #f2f2ff; font-weight: bold; }
+TD.mdname1 { background-color: #f2f2ff; font-weight: bold; color: #602020; }
+TD.mdname { background-color: #f2f2ff; font-weight: bold; color: #602020; width: 600px; }
+DIV.groupHeader { margin-left: 16px; margin-top: 12px; margin-bottom: 6px; font-weight: bold }
+DIV.groupText { margin-left: 16px; font-style: italic; font-size: smaller }
+
+
+TD.indexkey { 
+   background-color: #eeeeff; 
+   font-weight: bold; 
+   padding-right  : 10px; 
+   padding-top    : 2px; 
+   padding-left   : 10px; 
+   padding-bottom : 2px; 
+   margin-left    : 0px; 
+   margin-right   : 0px; 
+   margin-top     : 2px; 
+   margin-bottom  : 2px  
+}
+TD.indexvalue { 
+   background-color: #eeeeff; 
+   font-style: italic; 
+   padding-right  : 10px; 
+   padding-top    : 2px; 
+   padding-left   : 10px; 
+   padding-bottom : 2px; 
+   margin-left    : 0px; 
+   margin-right   : 0px; 
+   margin-top     : 2px; 
+   margin-bottom  : 2px  
+}
+
+FONT.keyword       { color: #008000 }
+FONT.keywordtype   { color: #604020 }
+FONT.keywordflow   { color: #e08000 }
+FONT.comment       { color: #800000 }
+FONT.preprocessor  { color: #806020 }
+FONT.stringliteral { color: #002080 }
+FONT.charliteral   { color: #008080 }
+
+.imagethumb{
+	width : 200;
+	height : 200;
+}
+
+.imagelink{
+}
+
+.imagecomment{
+	font-size: 75%;
+	width = 0;
+	text-align: center;
+}
+
+.imagetable{
+	border : 0;
+	width : 0;
+	text-align: center;
+}
+

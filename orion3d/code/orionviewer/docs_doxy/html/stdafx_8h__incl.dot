@@ -1,0 +1,42 @@
+digraph inheritance
+{
+  Node28 [shape="box",label="stdafx.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="black",style="filled" fontcolor="white"];
+  Node29 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node29 [shape="box",label="stdio.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node30 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node30 [shape="box",label="math.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node31 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node31 [shape="box",label="stdlib.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node32 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node32 [shape="box",label="fcntl.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node33 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node33 [shape="box",label="time.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node34 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node34 [shape="box",label="malloc.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node35 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node35 [shape="box",label="memory.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node36 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node36 [shape="box",label="tchar.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node37 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node37 [shape="box",label="fstream",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node38 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node38 [shape="box",label="ios",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node39 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node39 [shape="box",label="stdarg.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node40 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node40 [shape="box",label="conio.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node41 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node41 [shape="box",label="algorithm",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node42 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node42 [shape="box",label="map",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node43 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node43 [shape="box",label="vector",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node44 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node44 [shape="box",label="list",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node45 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node45 [shape="box",label="string",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node46 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node46 [shape="box",label="GL/gl.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+  Node47 -> Node28 [dir=back,color="midnightblue",fontsize=10,style="solid",fontname="Helvetica"];
+  Node47 [shape="box",label="GL/glu.h",fontsize=10,height=0.2,width=0.4,fontname="Helvetica",color="grey75"];
+}

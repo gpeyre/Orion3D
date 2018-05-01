@@ -1,0 +1,194 @@
+/*!
+	\page pageprogrammingnorms Orion3D programming norms
+
+	\section comments Comments
+		Under VC++, use the macros from the file 'Orion3DMacros.dsm' :
+			- CTRL+m : to comment a method [to do in the .cpp file]
+			- CRTL+* : comment a file [creates a header corresponding to its extension].
+			- CTRL+b : to create a block of comment to group methods.
+		NOTA : you shoul first edit the macros file to put your name.
+	
+	\section repartition Repartition of the code
+		- class defintion are put in '.h' files. 
+		- class implementation are put in '.cpp' files.
+		- inlined function are put in '.inl' files.
+		- Doxygen documentation (without C++ code) are put in '.dxt' files.
+		- only one class per header file.
+		- the VC++ macros declares these methods with the right code (using the OR_INLINE).
+		- the accessor (Getxxx end Setxxx) must be implemented in the '.inl'.
+		- the class must be declared under the namespace 'OR' (use CTRL+m).
+		- every .cpp must included the file 'stdafx.h' as <b>FIRST</b> inclusion to generate precompiled headers.
+		
+
+	\section type Types
+		- use the <b>Orion3D</b> basic types (OR_U32, OR_Float, etc.).
+		- for the STL conteners, define the types :
+		\code
+			typedef vector<float> T_RealVector;
+		    typedef T_RealVector::iterator IT_RealVector;
+	        typedef T_RealVector::riterator RIT_RealVector;	
+		\endcode
+
+	\section variables Variables names
+		- prefixes :
+			- integer : 'n'
+			- float : 'r'
+			- array : 'a'
+			- pointeur : 'p'
+			- caracter : 'c'
+			- boolean : 'b'
+			- examples : \code bool bIsTrue; float rNbrVal; \endcode
+		- Class attributes always end by '_'. They must be private.
+		- Abstract class end by '_ABC' (stands for Abstract Base Class).
+		- Contener always end by the name of the contener, for instance : \code T_RealVector WeightVector_; \endcode
+        - Don't use 'Nb' but 'Nbr' for "number".
+
+	\section references References
+		- Use references as often as possible.
+		- In general, accessor (Getxxx functions) should return references.
+		- Functions that should never be given NULL pointers (like 'add' function for a list)
+		should take references as arguments.
+		- A function should retrurn a pointer <b>only</b> if this pointer can be NULL.
+		- If a function return a pointer, then the caller must test is the returned data is not NULL :
+		\code
+			OR_Object* pObj = MyOrion.GetObjectByName("mesh0");
+			if( pObj==NULL )
+			{
+				cerr << "mesh couldn't be loaded" << endl;
+				return OR_ERROR;
+			}
+			else
+			{
+				...
+			}
+		\endcode
+
+	\section exceptions Exceptions
+		- Use exception to signal error.
+		- Every exception class must inherit from class OR_Exception.
+
+	\section constructor Constructors & destructors
+		- In general, destructor should be virtual.
+		- If a copy constructor is needed, then write also a assignement constructor.
+		- Use 'explicit' each time the argument of the constructor could lead to confuson.
+	
+	\section debugging	Debugging and tests
+		- Each class must test it's own attributes.
+		- Each time a pointer is going to be dereferenced, use an assert like :
+		\code
+			void MyFunction(OR_Object* pObj)
+			{
+				_ASSERT(pObj!=NULL);
+				MyListOfObjects.AddObject(*pObj);
+			}
+		\endcode
+
+	\section codepresentation Code presentation
+		- Always put a new line before '{' :
+		\code
+			// Not valid
+			void MyFunction() {
+				...
+			}
+
+			// Valid
+			void MyFunction() 
+			{
+				...
+			}
+		\endcode
+		- 'switch' statement should be indented like this (don't forget the 'default') :
+		\code
+			switch( arg )
+			{
+			case 0:
+				...
+				break;
+			case 1:
+				...
+				break;
+			default:
+				...
+				break;
+			}
+		\endcode
+		- 'if' statements should be written like this :
+		\code
+			// this is correct
+			if( a==0 )
+			{
+				cout << "correct" << endl;
+			}
+
+			// this is also correct
+			if( a==0 )
+				cout << "correct" << endl;
+
+			// this is *NOT* correct
+			if( a==0 ) {
+				cout << "Not correct" << endl;
+			}
+
+			// this is *NOT* correct
+			if( a==0 ) cout << "Not correct" << endl;
+		\endcode
+		- Allign functions declarations that goes together, like :
+		\code
+			void       SetObject(OR_Object& object);
+			OR_Object* GetObject();
+		\endcode
+		- A typical class defintion should go like this :
+			\code
+			class MyClass
+			{
+			pbulic:
+				// constructor
+				MyClass();
+				// destructor 
+				virtual ~MyClass();
+				// copy constructor 
+				MyClass(MyClass& source);
+				// copy operator
+				MyClass& operator = (MyClass& source);
+				...
+
+			protected:
+				...
+
+			private:
+				...
+			};
+			\endcode
+
+	\section loop Loops
+		- Don't use 'it++' but '++it'.
+		- Use local temporary variables :
+		\code
+			// Shouldn't be used
+			for( IT_RuleMap it=RuleMap_.begin(); it!=RuleMap_.end(); ++it )
+				if( (*it).second->Name() == pRuleName )
+					return (*it).second;
+
+			// That's better
+			for( IT_RuleMap it=RuleMap_.begin(); it!=RuleMap_.end(); ++it )
+			{
+				Rule* pRule = (*it).second;
+				if( pRule->Name() == pRuleName )
+					return pRule;
+			}
+		\endcode
+
+*/				   
+
+
+///////////////////////////////////////////////////////////////////////////////
+//  Copyright (C) 2000-2001 The  Orion3D Rewiew Board                        // 
+//---------------------------------------------------------------------------//
+//	This file is under the Orion3D licence.                                //
+//  Refer to orion3d_licence.txt for more details about the Orion3D Licence. //
+//---------------------------------------------------------------------------//
+//  Ce fichier est soumis a la Licence Orion3D.                              //
+//  Se reporter a orion3d_licence.txt pour plus de details sur cette licence.//
+///////////////////////////////////////////////////////////////////////////////
+//                           END OF FILE                                     //
+///////////////////////////////////////////////////////////////////////////////

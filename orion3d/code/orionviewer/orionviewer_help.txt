@@ -1,0 +1,29 @@
+################################################################
+# this is a help file, use 'h' to display it under orionviewer #
+################################################################
+----------------------------------------------------------------
+              -==[ OrionViewer - HELP ]==-
+----------------------------------------------------------------
+    'espace'       : toggle to/from menu mode.
+    'ESC'          : quit.
+-------------------- particules | particles --------------------
+    'TAB'          : toggle emission on/off.
+    'e, E'         : explosion.
+------------- surfaces 3d  maths | maths 3d surfaces -----------
+    '1,2,...,7'    : selectionner une surface | select a surface.
+    's, S'         : toggle shader type reflexive/cartoon/flat.
+    'p, P'         : boost the surface parameter in opposite ways.
+--------------------------- metaballs --------------------------
+    'm, M'         : toggle shader type reflexive/cartoon/flat.
+---------------- mode de rendus | rendering mode ---------------
+    'w, W'         : toggle solid/wireframe/point.
+-------------------------- animations --------------------------
+    'b'            : restart the animation.
+    'p'            : toggle play/pause.
+----------------------------- FPS ------------------------------
+    'f'            : display a FPS report.
+----------------------------- misc -----------------------------
+    'x'            : take a screenshot [screen???.tga].
+----------------------------- ABOUT ----------------------------
+    'a, A'         : about OrionViewer.
+----------------------------------------------------------------

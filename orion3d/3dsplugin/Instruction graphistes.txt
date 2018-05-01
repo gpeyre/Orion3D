@@ -1,0 +1,33 @@
+*Pour définir une area (ou cell) :
+  C'est hyper simple. En fait, on définit les areas grâce aux groupes de MAX : 
+il suffit de regrouper tous les objets (c'est-à-dire les objets à l'intérieur de la pièce mais aussi les murs etc.)
+dans un groupe, que vous nommerez "Area XXX" en remplacant XXX par ce que vous voulez 
+(un nombre, un mot, une phrase, n'importe quoi du moment que ca ne dépasse pas 30 caractères). 
+S'il reste des objets laissés seuls, l'exporteur créera une area en plus où il mettra tous les objets qui ne se 
+trouvent dans aucune area.
+
+*Pour créer un portal :
+  Les portals sont des lignes fermées.
+Pour dessiner un portal, il suffit donc de créer une nouvelle ligne représentant les contours du portal.
+La ligne doit obligatoirement être fermée et convexe. Si vous avez un portal concave, séparez-le en lignes convexes.
+Vous pouvez parfaitement faire des polylignes fermées (un seul objet 2D contenant plusieurs lignes fermées).
+Pour que l'exporter prenne l'objet en tant que portal, il faut que son nom soit du type "Portal XXX", où XXX désigne 
+l'area cible. Je m'explique :
+Un portal est un lien entre deux areas. 
+Donc c'est à vous de définir entre quelle et quelle area se fait le lien. 
+Pour définir la première area, et bien il suffit de placer la portal dedans, c'est-à-dire de l'attacher au groupe de
+ cette area. Et la deuxième area est définie dans le nom du portal.
+
+Un petit exemple : nous avons deux areas, séparées par un portal. D'abord nous définissons les deux areas en créant 
+les deux groupes (nommons-les "Area Chambre" et "Area Salon"), dans lesquels nous mettons les objets aquédats 
+(le groupe peut bien sûr être ouvert). Ensuite, il faut créer le portal : on dessine une ligne fermée suivant les contours 
+du chambranle. On attache ensuite cet objet au groupe "Area Chambre", et on le nomme "Portal Salon". Ainsi, l'exporter
+comprendra que cette ligne définit les contours d'un portal liant la chambre et le salon. On aurait aussi pu mettre la
+spline dans le groupe "Area Salon" et la nommer "Portal Chambre", cela revient au même.
+
+Remarque : l'exporter ne tient pas compte de la casse. "Area Salon" est la même chose que "area salon".
+
+Pour vous aider j'ai joint deux scènes basiques en guise d'exemple.
+Pour visualiser le résultat, il suffit d'exporter la scène sous le format .KSP 
+(il faut pour cela bien sûr avoir placé le plug-in "KSP Exporter.dle" dans le répertoire plugins de MAX),
+ puis de lancer OrionViewer et de choisir "Charger un fichier .KSP" dans le menu.

@@ -1,0 +1,1746 @@
+'******************************************************************************
+'                                    MacroOrion3D.dsm
+'******************************************************************************
+
+option explicit
+
+'const dsExtend = 1
+'const dsFirstText = 0
+'const dsFirstColumn = 0
+'const dsSaveChangesYes = 2
+'const dsMatchCase = 2
+'const dsMatchWord = 0
+'const dsMatchRegExp = 8
+'const dsMove = 0
+
+dim clipBoard
+
+'##################################################################################################################
+
+private function Name()
+'DESCRIPTION: ajoute le nom
+    Name = "Gabriel Peyré "
+end function
+
+'##################################################################################################################
+
+private function InitialsAndDate()
+'DESCRIPTION: Inserts initials and date (II YYYY-MM-DD) a the cursor location. Advised keyboard shortcut: Alt+Shift+I
+    InitialsAndDate = Name() + FormatedDate
+end function
+
+'##################################################################################################################
+
+sub SwapComments()
+'DESCRIPTION: (Alt+²) Puts or remove comments // at/from the beginning of the line.
+
+    dim replacement
+    dim commentsPosition
+    dim commentStart 
+    dim commentStartLen 
+
+    commentStart = CommentsStart()
+    commentStartLen = len(commentStart)
+
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+    ActiveDocument.Selection.EndOfLine dsExtend
+
+    if Left( LeftTrim(ActiveDocument.Selection), commentStartLen ) = commentStart then
+        commentsPosition = Instr( ActiveDocument.Selection, commentStart )
+        replacement = Left(ActiveDocument.Selection, commentsPosition - 1)
+        replacement = replacement + Mid(ActiveDocument.Selection, commentsPosition + commentStartLen)
+        ActiveDocument.Selection = replacement
+        ActiveDocument.Selection.StartOfLine dsFirstColumn
+    else
+        ActiveDocument.Selection.StartOfLine dsFirstColumn
+        ActiveDocument.Selection = commentStart
+    end if
+    ActiveDocument.Selection.LineDown
+end sub
+
+'##################################################################################################################
+
+sub CommentMethod()
+'DESCRIPTION: (Alt+Shift+-) Insère une entête de méthode dans un fichier .cpp. Placer le curseur avant le "::".
+    CommentMethod_1( "" )
+end sub
+
+'##################################################################################################################
+
+sub CommentMethod_1( object )
+    dim functionName
+    dim className
+    dim comments
+    dim methodName
+    dim parameters
+    dim parameter
+    dim iPos
+    dim bFlag
+
+    'Parameters
+    if ActiveDocument.Selection.FindText(")") then
+        do
+            ActiveDocument.Selection.WordLeft dsExtend, 1
+        loop while left(ActiveDocument.Selection, 1) <> "("
+    end if
+    ActiveDocument.Selection.WordRight dsExtend, 1
+    parameters = trim(ActiveDocument.Selection.Text)
+    'End Parameters
+
+
+    ' Reselect the entire line  
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+    ActiveDocument.Selection.EndOfLine dsExtend
+    
+
+    if not ActiveDocument.Selection.FindText( "::" ) then
+        MsgBox "'CommentMethod_1': could not find a method implementation (no '::' found)."
+        exit sub
+    end if  
+
+    ActiveDocument.Selection.WordRight dsMove, 2
+    ActiveDocument.Selection.WordLeft dsExtend, 3
+
+    if instr( ActiveDocument.Selection, ">" ) > 0 then
+        do
+            ActiveDocument.Selection.WordLeft dsExtend, 1
+        loop while left(ActiveDocument.Selection, 1) = "<" or instr(ActiveDocument.Selection, "<") = 0
+    end if
+    
+    functionName = ActiveDocument.Selection
+    if Instr( functionName, "<" ) > 0 then
+        className = left( functionName, instr(functionName, "<") - 1 )
+    else
+        className = left( functionName, instr(functionName, "::") - 1 )
+    end if
+
+    methodName = mid( functionName, instr(functionName, "::") + 2 )
+
+    ActiveDocument.Selection.LineUp
+
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+    ActiveDocument.Selection.EndOfLine dsExtend
+    if Instr( 1, ActiveDocument.Selection, "template", vbTextCompare ) > 0 then
+        ActiveDocument.Selection.LineUp
+    End If
+    if Instr( 1, ActiveDocument.Selection, "inline", vbTextCompare ) > 0 then
+        ActiveDocument.Selection.LineUp
+    End If
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+
+    comments = NewLine
+
+    comments = comments + "/*------------------------------------------------------------------------------*/" + NewLine
+	comments = comments + "/** " + NewLine
+    comments = comments + " * Name : "
+
+    if className = methodName then
+        comments = comments + className + " constructor"
+    elseif methodName = "~" + className then
+        comments = comments + className + " destructor"
+    else
+        comments = comments + functionName
+    end if
+
+    comments = comments + NewLine
+
+    if len(parameters) > 1 then
+        bFlag = 0
+        iPos = instr(parameters, ",")
+        while (iPos <> 0) 
+            parameter = left(parameters, iPos - 1)
+            parameters = mid(parameters, iPos + 1)
+            parameter = mid(parameter, InStrRev(parameter," "))
+            if bFlag = 0 then
+                comments = comments + " *" + NewLine + " *  \param " + parameter + " EXPLANATION" + NewLine
+                bFlag = 1
+            else
+                comments = comments + " *  \param " + parameter + " EXPLANATION" + NewLine
+            end if
+            iPos = instr(parameters, ",")
+        wend
+        parameter = mid(parameters, InStrRev(parameters," "))
+        if bFlag = 0 then
+                comments = comments + " *" + NewLine + " *  \param " + parameter + " EXPLANATION" + NewLine
+                bFlag = 1
+            else
+                comments = comments + " *  \param " + parameter + " EXPLANATION" + NewLine
+        end if
+    else
+        comments = comments + " *" + NewLine
+    end if 
+
+    comments = comments + " *  \return PUT YOUR RETURN VALUE AND ITS EXPLANATION" + NewLine
+	comments = comments + " *  \author " + InitialsAndDate + NewLine
+    comments = comments + " *" + NewLine
+    comments = comments + " * PUT YOUR COMMENTS HERE" + NewLine
+	comments = comments + " */ " + NewLine
+	comments = comments + "/*------------------------------------------------------------------------------*/"
+
+    ActiveDocument.Selection = comments
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+    ActiveDocument.Selection.LineDown dsMove, 3
+
+End Sub
+
+'##################################################################################################################
+
+private function CreatedInformation()
+    CreatedInformation = CommentsStart + " Created: " + InitialsAndDate 
+end function
+
+'##################################################################################################################
+
+sub InsertCreatedInformation()
+'DESCRIPTION: (Alt+Shift+C) Inserts or replaces "// Created: II YY-MM-DD".
+
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+    ActiveDocument.Selection.EndOfLine dsExtend
+    if Instr( 1, ActiveDocument.Selection, "// Created", vbTextCompare ) > 0 then
+        ActiveDocument.Selection = ""
+    elseif ActiveDocument.Selection <> "" then
+        ActiveDocument.Selection.StartOfLine dsFirstColumn
+        ActiveDocument.Selection.NewLine
+        ActiveDocument.Selection.LineUp
+    end if
+
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+    ActiveDocument.Selection = CommentsStart + " Created: " +   InitialsAndDate
+End Sub
+
+'##################################################################################################################
+
+sub InsertLastModifiedInformation()
+'DESCRIPTION: (Alt+Shift+D) Inserts or replaces "// Last modified: II YY-MM-DD".
+
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+    ActiveDocument.Selection.NewLine
+    ActiveDocument.Selection.LineUp
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+    ActiveDocument.Selection = CommentsStart + " Modified: " + InitialsAndDate + " (what ?)"
+End Sub
+
+'##################################################################################################################
+
+sub CommentFile()
+'DESCRIPTION: (Alt+Shift+*) Creates file header depending on its type (.cpp, .h, .inl)
+    Dim fileName
+    Dim defineName
+    Dim comments
+	Dim strInlinePrefix
+
+    fileName = ActiveDocument.name
+    ActiveDocument.Selection.StartOfDocument
+
+	comments =  comments + "/*------------------------------------------------------------------------------*/" + NewLine
+	comments =  comments + "/** " + NewLine
+	comments =  comments + " *  \file  " + fileName + NewLine
+if DocumentNameExtension = "h" then
+	comments =  comments + " *  \brief Definition of class \c " + DocumentNameWithoutExtension + NewLine
+elseif DocumentNameExtension = "cpp" or DocumentNameExtension = "c" or DocumentNameExtension = "C" then
+	comments =  comments + " *  \brief Definition of class \c " + DocumentNameWithoutExtension + NewLine
+elseif DocumentNameExtension = "inl" then
+	comments =  comments + " *  \brief Inlined methods for \c " + DocumentNameWithoutExtension + NewLine
+end if
+	comments =  comments + " *  \author " + InitialsAndDate + NewLine
+	comments =  comments + " */ " + NewLine
+	comments =  comments + "/*------------------------------------------------------------------------------*/" + NewLine 
+    
+	'INCLUDE FILE
+    if DocumentNameExtension = "h" then
+        defineName = "__" + DocumentNameWithoutExtension + "_h_"
+        
+        comments = comments + NewLine
+		comments = comments + "#ifndef " + defineName + NewLine
+        comments = comments + "#define " + defineName + NewLine
+        comments = comments + NewLine
+
+		'include OR_Config
+		comments = NewLine + comments + "#include ""../configuration/OR_Config.h""" + NewLine
+
+		'name space
+        comments = comments + NewLine 
+		if NameSpaceName <> "" then
+			comments = comments + "namespace " + NameSpaceName + " {"
+			comments = comments + NewLine + NewLine
+		end if
+
+		'class header
+		comments = comments + "/*------------------------------------------------------------------------------*/" + NewLine
+		comments = comments + "/** " + NewLine
+		comments = comments + " *  \class  " + DocumentNameWithoutExtension + NewLine
+		comments = comments + " *  \brief  PUT THE COMMENTS ON THE CLASS HERE" + NewLine
+		comments = comments + " *  \author " + InitialsAndDate + NewLine
+		comments = comments + " *  PUT FULL DESCRIPTION HERE " + NewLine
+		comments = comments + " */ " + NewLine
+		comments = comments + "/*------------------------------------------------------------------------------*/" + NewLine
+		comments = comments + NewLine
+
+		'class declaration
+        comments = comments + "class " + DocumentNameWithoutExtension + NewLine
+        comments = comments + "{" + NewLine + NewLine
+        comments = comments + "public:" + NewLine + NewLine
+        comments = comments + "    " + DocumentNameWithoutExtension + "();" + NewLine
+        comments = comments + "    virtual ~" + DocumentNameWithoutExtension + "();" + NewLine
+        comments = comments + NewLine
+
+        comments = comments + + "private:" + NewLine + NewLine
+        comments = comments + "};" + NewLine
+
+        comments = comments + NewLine
+		if NameSpaceName <> "" then
+			comments = comments + "} // End namespace " + NameSpaceName
+			comments = comments + NewLine + NewLine
+		end if
+
+
+		'INLINES
+		if NameSpaceName <> "" then
+			strInlinePrefix = NameSpaceName + "_"
+		else
+			strInlinePrefix = ""
+		end if	
+
+		comments = comments + "#ifdef " + strInlinePrefix + "USE_INLINE" + NewLine
+		comments = comments + "    #include """ + DocumentNameWithoutExtension + ".inl""" + NewLine
+		comments = comments + "#endif" + NewLine + NewLine 
+
+        ActiveDocument.Selection = comments
+
+        ActiveDocument.Selection.EndOfDocument
+        ActiveDocument.Selection = NewLine + "#endif // " + defineName + NewLine
+        ActiveDocument.Selection.LineUp
+
+	'CPP FILE
+    elseif DocumentNameExtension = "cpp" or DocumentNameExtension = "c" or DocumentNameExtension = "C" then
+
+        ActiveDocument.Selection = comments + SCCSID_Comments() + NewLine
+		ActiveDocument.Selection = ActiveDocument.Selection + "#include ""../stdafx.h""" + NewLine
+		ActiveDocument.Selection = ActiveDocument.Selection + "#include """ + DocumentNameWithoutExtension + ".h""" + NewLine + NewLine
+
+		'INLINES
+		if NameSpaceName <> "" then
+			strInlinePrefix = NameSpaceName + "_"
+		else
+			strInlinePrefix = ""
+		end if	
+
+		ActiveDocument.Selection = ActiveDocument.Selection + "#ifndef " + strInlinePrefix + "USE_INLINE" + NewLine
+		ActiveDocument.Selection = ActiveDocument.Selection + "	    #include """ + DocumentNameWithoutExtension + ".inl""" + NewLine
+		ActiveDocument.Selection = ActiveDocument.Selection + "#endif" + NewLine + NewLine 
+
+		'using namespace 
+		if NameSpaceName <> "" then 
+			if NameSpaceName = "MP" then
+				ActiveDocument.Selection = ActiveDocument.Selection + "MP_USING_NAMESPACE"
+			else
+				ActiveDocument.Selection = ActiveDocument.Selection + "using namespace " + NameSpaceName + ";"
+			end if
+			ActiveDocument.Selection = ActiveDocument.Selection + NewLine + NewLine
+		end if
+
+	'INL FILE
+	elseif DocumentNameExtension = "inl" then
+		ActiveDocument.Selection = comments
+		ActiveDocument.Selection = "#include """ + DocumentNameWithoutExtension + ".h""" + NewLine + NewLine
+		if NameSpaceName <> "" then
+			ActiveDocument.Selection = ActiveDocument.Selection + "namespace " + NameSpaceName + " {" + NewLine + NewLine
+			ActiveDocument.Selection = ActiveDocument.Selection + "} // End namespace " + NameSpaceName + NewLine
+		end if
+		
+	
+	'Other files
+    else
+        ActiveDocument.Selection = comments
+    end if
+
+	'File footer
+	ActiveDocument.Selection.EndOfDocument
+	Dim footer
+	footer = NewLine+ "///////////////////////////////////////////////////////////////////////////////" + NewLine
+	footer = footer + "//  Copyright (C) 2000-2001 The Orion3D Rewiew Board                         //" + NewLine
+	footer = footer + "//---------------------------------------------------------------------------//" + NewLine
+	footer = footer + "//  This file is under the Orion3D licence.                                  //" + NewLine
+	footer = footer + "//  Refer to orion3d_licence.txt for more details about the Orion3D Licence. //" + NewLine
+	footer = footer + "//---------------------------------------------------------------------------//" + NewLine
+	footer = footer + "//  Ce fichier est soumis a la Licence Orion3D.                              //" + NewLine
+	footer = footer + "//  Se reporter a orion3d_licence.txt pour plus de details sur cette licence.//" + NewLine
+	footer = footer + "///////////////////////////////////////////////////////////////////////////////" + NewLine
+	footer = footer + "//                               END OF FILE                                 //" + NewLine
+	footer = footer + "///////////////////////////////////////////////////////////////////////////////" + NewLine
+    ActiveDocument.Selection = footer + NewLine
+
+
+End Sub
+
+'##################################################################################################################
+
+function DocumentFullNameWithoutExtension()
+    DocumentFullNameWithoutExtension = left( ActiveDocument.fullName, InstrRev(ActiveDocument.fullname, ".") - 1 )
+end function
+
+'##################################################################################################################
+
+function DocumentNameWithoutExtension()
+    DocumentNameWithoutExtension = left( ActiveDocument.name, InstrRev(ActiveDocument.name, ".") - 1 )
+end function
+
+'##################################################################################################################
+
+function NameSpaceName()
+    dim nLength
+	nLength = Instr(ActiveDocument.name, "_")
+	if nLength <> 0 then
+		NameSpaceName = left( ActiveDocument.name, nLength  - 1 )
+	end if
+end function
+
+'##################################################################################################################
+
+function DocumentNameExtension()
+    DocumentNameExtension = mid( ActiveDocument.name, InstrRev(ActiveDocument.name, ".") + 1 )
+end function
+
+function CommentsStart()
+    select case lcase( DocumentNameExtension() )
+        case "cpp", "h", "c", "dat"
+            CommentsStart = "//"
+        case "ini"
+            CommentsStart = "//"
+        case "dsm"
+            CommentsStart = "'"
+        case else
+            CommentsStart = "//"
+    end select
+end function
+
+'##################################################################################################################
+
+function CommentsBorder( byval character )
+    CommentsBorder = CommentsStart + string( 77, character )
+end function
+ 
+'##################################################################################################################
+
+function CommentsFrame( byval character, byval nHeight )
+    dim leftSide
+    dim nNumLine
+
+    leftSide = CommentsStart + " " + NewLine
+
+    CommentsFrame = CommentsBorder(character) + NewLine
+
+    for nNumLine = 1 to nHeight 
+        CommentsFrame = CommentsFrame + leftSide
+    next
+    CommentsFrame = CommentsFrame + CommentsBorder(character)
+end function
+
+'##################################################################################################################
+
+Sub InsertCommentsWithSTARS()
+'DESCRIPTION: (Ctrl+Shift+*) Insert a comment placeholder with * around.
+    ActiveDocument.Selection = CommentsFrame( "*", 1 ) + NewLine
+    ActiveDocument.Selection.LineUp dsMove, 2
+    ActiveDocument.Selection.EndOfLine
+End Sub
+
+'##################################################################################################################
+
+Sub InsertCommentsWithEQUALS()
+'DESCRIPTION: (Ctrl+Shift+=) Insert a comment placeholder with = around.
+    ActiveDocument.Selection = CommentsFrame( "=", 1 ) + NewLine
+    ActiveDocument.Selection.LineUp dsMove, 2
+    ActiveDocument.Selection.EndOfLine
+End Sub
+
+'##################################################################################################################
+
+Sub InsertCommentsWithDASHES()
+'DESCRIPTION: (Ctrl+Shift+-) Insert a comment placeholder with - around.
+    ActiveDocument.Selection = CommentsFrame( "-", 1 ) + NewLine
+    ActiveDocument.Selection.LineUp dsMove, 2
+    ActiveDocument.Selection.EndOfLine
+End Sub
+
+'##################################################################################################################
+
+function FormatedDate()
+    FormatedDate = Right(CStr(Year(Date())), 4) + "-" + Right( "0" + CStr(Month(Date())), 2 ) + "-" + Right( "0" + CStr(Day(Date())), 2)
+end Function
+
+'##################################################################################################################
+
+function LeftTrim( text )
+    text = LTrim(text)
+    while Left(text, 1) = "	"
+        text = LTrim(mid(text, 2))
+    wend
+    LeftTrim = text
+end Function
+
+'##################################################################################################################
+
+function NewLine()
+    NewLine = chr(13) + chr(10)
+end function
+
+'##################################################################################################################
+
+sub StatementFor()
+'DESCRIPTION: (Alt+Shift+R) Insert a for statement: type identifier ruleList_ then run then macro. It does: for( int n = 0; n < ruleList_.Size(); ++n ) { Rule& rule = ruleList_[n]; }
+    dim lineOfText
+    dim identifier
+    dim text
+    dim identifierType
+    dim indentation
+    dim variableName
+
+    ' Computes the indentation (only works if we are using spaces, not tabulations)
+    ' and extracts the user typed identifier.
+    ActiveDocument.Selection.StartOfLine dsFirstColumn, dsExtend
+    lineOfText = rtrim( ActiveDocument.Selection )
+    identifier = ltrim( lineOfText )
+
+    indentation = space( len(lineOfText) - len(identifier))
+
+    ' If 'ruleList_' (or 'ruleList') was typed, we extract 'rule', then
+    ' tranform it into 'Rule'
+    ' We have then:
+    '   identifier = 'ruleList_'
+    '   variableName = 'rule'
+    '   identifierType = 'Rule'
+    if right( identifier, 5 ) = "List_" then
+        variableName = left(identifier, len(identifier) - 5)
+    else 
+        if right( identifier, 4 ) = "List" then
+            variableName = left(identifier, len(identifier) - 4)
+        end if
+    end if
+
+    identifierType = ucase(Mid( variableName, 1, 1)) + Mid( variableName, 2 )
+
+    ' Insert, if we have 'ruleList_' that was typed:
+    '       for( int n = 0; n < ruleList_.Size(); ++n )
+    '       {
+    '           Rule& rule = ruleList_[n];
+    '       }
+    text = indentation + "for( int n = 0; n < " + identifier + ".Size(); ++n )" + NewLine
+    text = text + indentation + "{" + NewLine
+    text = text + indentation + "    " + identifierType + "& " + variableName + " = " + identifier + "[n];" + NewLine
+    text = text + indentation + "    " + NewLine
+    text = text + indentation + "}" + NewLine
+
+    ' Move the cursor just the line before the '}'
+    ActiveDocument.Selection = text
+    ActiveDocument.Selection.LineUp dsMove, 2
+    ActiveDocument.Selection.EndOfLine
+End Sub
+
+'##################################################################################################################
+
+Sub FileCleanUp()
+'DESCRIPTION: (alt shift =) Clean up the file: replace tabs by spaces, remove trailing spaces etc.
+    Dim nCurrentLine
+    Dim nCurrentColumn
+
+    nCurrentLine = ActiveDocument.Selection.CurrentLine
+    nCurrentColumn = ActiveDocument.Selection.CurrentColumn
+
+    ActiveDocument.Selection.SelectAll
+    ActiveDocument.Selection.Untabify
+
+    ' Remove all trailing spaces
+    do while ActiveDocument.ReplaceText( " $", "", dsMatchRegExp )
+    loop
+    ' Add trailing spaces to empty comment lines
+    do while ActiveDocument.ReplaceText( CommentsStart + "$", CommentsStart + " ", dsMatchRegExp )
+    loop
+
+    ActiveDocument.ReplaceText "if (", "if( " 
+    do while ActiveDocument.ReplaceText( "if(  ", "if( " )
+    loop
+
+    ActiveDocument.ReplaceText "for (", "for( " 
+    do while ActiveDocument.ReplaceText( "for(  ", "for( " )
+    loop
+
+    ActiveDocument.ReplaceText "( )", "()"
+    ActiveDocument.ReplaceText "( void )", "()"
+
+    ActiveDocument.Selection.MoveTo nCurrentLine, nCurrentColumn, dsMove
+End Sub
+
+'##################################################################################################################
+
+function CurrentWord()
+    dim word
+
+    ActiveDocument.Selection.WordLeft
+    ActiveDocument.Selection.WordRight dsExtend
+    word = ActiveDocument.Selection
+    ActiveDocument.Selection.WordLeft 
+
+    CurrentWord = word
+end function
+
+'##################################################################################################################
+
+Sub TransformMethodPrototypeIntoImplementation()
+'DESCRIPTION: (Alt+Shift+M) From a method prototype type in class declaration, creates its implementation.
+'Begin Recording
+    dim functionPrototype
+    dim functionImplementation
+    dim nFunctionNamePosition
+    dim nFirstParenthesisPosition
+    dim nFunctionNameLastCharacterPosition
+
+    ActiveDocument.Selection.StartOfLine dsFirstText
+    ActiveDocument.Selection.EndOfLine dsExtend
+    functionPrototype = trim(ActiveDocument.Selection)
+
+    if right(functionPrototype, 1) = ";" then
+        functionPrototype = left( functionPrototype, len(functionPrototype) - 1 )
+    end if
+    if left( functionPrototype, 8 ) = "virtual " then
+        functionPrototype = mid( functionPrototype, 9 )
+    end if
+    if left( functionPrototype, 7 ) = "static " then
+        functionPrototype = mid( functionPrototype, 8 )
+    end if
+    functionPrototype = trim( functionPrototype )
+
+    nFirstParenthesisPosition = instr( functionPrototype, "(" )
+    if nFirstParenthesisPosition = 0 then
+        MsgBox "'TransformMethodPrototypeIntoImplementation': could not find a '(' in '" + functionPrototype + "'"
+        exit sub
+    end if
+
+    nFunctionNameLastCharacterPosition = nFirstParenthesisPosition - 1
+    while mid( functionPrototype, nFunctionNameLastCharacterPosition, 1  ) = " "
+        nFunctionNameLastCharacterPosition = nFunctionNameLastCharacterPosition - 1
+    wend
+
+    nFunctionNamePosition = InstrRev( functionPrototype, " ", nFunctionNameLastCharacterPosition ) + 1
+
+    functionImplementation = trim(left( functionPrototype, nFunctionNamePosition - 1 ))
+    if functionImplementation <> "" then
+        functionImplementation = functionImplementation + " " 
+    end if
+
+    if DocumentNameExtension = "h" then
+        functionImplementation = "inline" + NewLine + functionImplementation
+    end if
+
+    if DocumentNameExtension = "inl" then
+		if NameSpaceName = "" then
+			functionImplementation = "INLINE" + NewLine + functionImplementation
+		else
+			functionImplementation = NameSpaceName + "_INLINE" + NewLine + functionImplementation
+		end if
+    end if
+
+    functionImplementation = functionImplementation + DocumentNameWithoutExtension + "::"
+    ' Function name
+    functionImplementation = functionImplementation + trim( mid(functionPrototype, nFunctionNamePosition, nFunctionNameLastCharacterPosition - nFunctionNamePosition + 1) )
+    ' Function parameters (with parenthesis)
+    functionImplementation = functionImplementation + trim( mid(functionPrototype, nFirstParenthesisPosition) )
+    functionImplementation = functionImplementation + NewLine
+    functionImplementation = functionImplementation + "{" + NewLine
+    functionImplementation = functionImplementation + "}" + NewLine
+
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+    ActiveDocument.Selection.EndOfLine dsExtend
+    ActiveDocument.Selection = NewLine + functionImplementation
+    ActiveDocument.Selection.LineUp dsMove, 3
+    CommentMethod_1("")
+
+    if DocumentNameExtension <> "h" then '- à cause du 'inline' rajouté.
+        ActiveDocument.Selection.LineUp dsMove, 1
+    end if
+
+    ActiveDocument.Selection.EndOfLine
+    ActiveDocument.Selection.NewLine
+
+'End Recording
+End Sub
+
+'##################################################################################################################
+
+sub InsertSCCSIDComments()
+'DESCRIPTION: (Alt+Shift+S) 
+    ActiveDocument.Selection = SCCSID_Comments()
+end sub
+
+function SCCSID_Comments()
+    dim comments 
+	comments = "#ifdef OR_SCCSID" + NewLine
+    comments = comments + "static const char* sccsid = ""@(#) "
+    comments = comments + ActiveDocument.name + " (c) Gabriel Peyré & Antoine Bouthors " + CStr(Year(Date())) + """;" + NewLine
+	comments = comments + "#endif // OR_SCCSID" + NewLine + NewLine
+    SCCSID_Comments = comments
+end function
+
+'##################################################################################################################
+
+function IsLower( character )
+    if character > "z" then 
+        IsLower = false
+    else
+        if character < "a" then
+            IsLower = false
+        else
+            IsLower = true
+        end if
+    end if
+end function
+
+'##################################################################################################################
+
+Sub PasteAsInclude()
+'DESCRIPTION: (Alt+Shift+I) Paste what is in the clipboard and add #include " on the left and .h" on the right.
+    dim fileName
+
+    if IsLower( left( fileName, 1 )) then
+        ActiveDocument.Selection = "#include <" + clipBoard + ".h>" + NewLine
+    else
+        ActiveDocument.Selection = "#include """ + clipBoard + ".h""" + NewLine
+    end if
+
+'End Recording
+End Sub
+
+'##################################################################################################################
+
+Sub ImplementParserDefinition()
+'DESCRIPTION: (Alt+Shift+P)
+    dim functionName
+    dim grammarImplementation
+    dim nFirstLine
+    dim grammarDefinition
+
+    if not ActiveDocument.Selection.FindText( ":==" ) then
+        MsgBox "'CommentMethod_1': could not find a definition to implement (no ':==' found)."
+        exit sub
+    end if
+
+    ActiveDocument.Selection.WordLeft
+    ActiveDocument.Selection.WordLeft dsExtend
+    
+    functionName = trim( ActiveDocument.Selection )
+    ActiveDocument.Selection.LineDown
+    ActiveDocument.Selection.StartOfLine dsFirstColumn
+
+    nFirstLine = ActiveDocument.Selection.CurrentLine
+    do
+        ActiveDocument.Selection.LineDown
+        ActiveDocument.Selection.StartOfLine dsFirstColumn
+        ActiveDocument.Selection.EndOfLine dsExtend
+    loop until trim(ActiveDocument.Selection) = ""
+    
+    do
+        ActiveDocument.Selection.LineUp dsExtend
+    loop until ActiveDocument.Selection.CurrentLine = nFirstLine
+
+    grammarDefinition = ActiveDocument.Selection
+
+    ActiveDocument.Selection.LineUp dsExtend
+    ActiveDocument.Selection.Delete
+
+    grammarImplementation = "bool " + DocumentNameWithoutExtension + "::" + functionName + "()" + NewLine
+    grammarImplementation = grammarImplementation + "{" + NewLine
+    grammarImplementation = grammarImplementation + "}" + NewLine
+
+    ActiveDocument.Selection = grammarImplementation
+
+    ActiveDocument.Selection.LineUp dsMove, 3
+    CommentMethod_1( "    " + functionName + ":==" + NewLine + grammarDefinition )
+
+    ActiveDocument.Selection = grammarDefinition
+End Sub
+
+'##################################################################################################################
+
+Sub AddModifiedByDelimiters()
+'DESCRIPTION: (Alt+Shift+Y) Select a few lines, then excute this macro. It adds special comments around the lines.
+
+    ActiveDocument.Selection = CommentsStart + " $$$$ >>>> MODIF " + InitialsAndDate + NewLine + ActiveDocument.Selection + CommentsStart + " $$$$ <<<< MODIF " + InitialsAndDate + NewLine
+
+End Sub
+
+'##################################################################################################################
+
+sub PasteUserComments()
+'DESCRIPTION: (Ctrl+Shift+$) Adds comments, initials and date (// $$$$ VA 00-01-17:)
+    ActiveDocument.Selection = CommentsStart + " $$$$ " + InitialsAndDate + ": "
+end sub
+
+'##################################################################################################################
+
+sub PasteCodeReviewComments()
+'DESCRIPTION: (Alt+Shift+$) Adds comments, code review initial and date (// $$$$ _RC_ 00-01-17:)
+    ActiveDocument.Selection = CommentsStart + " $$$$ _RC_ " + InitialsAndDate + ": "
+end sub
+
+'##################################################################################################################
+
+sub PastePrintVariable()
+'DESCRIPTION: (Ctrl+Shift+<) if X is in clipboard, paste 'cout << "X = " << X << endl;
+    ActiveDocument.Selection = "cout << """
+    ActiveDocument.Selection = clipBoard
+    ActiveDocument.Selection = " = "" << "
+    ActiveDocument.Selection = clipBoard
+    ActiveDocument.Selection = " << endl;"
+end sub
+
+'##################################################################################################################
+
+Sub AddEmptyLineIfNecessary()
+'DESCRIPTION: A description was not provided.
+
+    Dim document
+    For Each document in Application.Documents
+        document.Selection.EndOfDocument
+        document.Selection.StartOfLine dsFirstColumn, dsExtend
+
+        if document.Selection <> "" then
+            document.Selection.EndOfDocument
+            document.Selection.NewLine
+        end if
+        document.Close()
+    Next
+
+End Sub
+
+'##################################################################################################################
+
+sub Application_DocumentOpen(theDocument)
+    dim name
+    name = theDocument.FullName
+
+    dim bIsReadOnly
+    bIsReadOnly = theDocument.ReadOnly
+
+    if right(name, 4) = ".rtf" or right(name, 4) = ".doc" then
+        theDocument.Close
+        if bIsReadOnly then
+            msgbox "Open doc files from SourceSafe, not from DevStudio" + chr(13) + "and CHECK OUT file first from SourceSafe!", vbOKOnly, "MASA"
+        else
+            msgbox "Open doc files from SourceSafe, not from DevStudio", vbOKOnly, "MASA"
+        end if
+    end if
+
+end sub
+
+'##################################################################################################################
+
+sub Orion3DCopy()
+'DESCRIPTION: (Ctrl+C) Pour remplacer le Ctrl C/Ctrl V bogué de cette merde.
+    ActiveDocument.Selection.Copy
+
+    dim nCurrentColumn
+    dim nCurrentLine
+    if ActiveDocument.Selection = "" then
+        nCurrentColumn = ActiveDocument.Selection.CurrentColumn
+        nCurrentLine = ActiveDocument.Selection.CurrentLine
+
+        ActiveDocument.Selection.StartOfLine dsFirstColumn
+        ActiveDocument.Selection.LineDown dsExtend
+
+        clipBoard = ActiveDocument.Selection
+
+        ActiveDocument.Selection.MoveTo nCurrentLine, nCurrentColumn
+
+    else
+        clipBoard = ActiveDocument.Selection
+    end if
+end sub
+
+'##################################################################################################################
+
+sub Orion3DCut()
+'DESCRIPTION: (Ctrl+X) Pour remplacer le Ctrl C/Ctrl V bogué de cette merde.
+    ActiveDocument.Selection.Copy
+    clipBoard = ActiveDocument.Selection
+    ActiveDocument.Selection = ""
+end sub
+
+'##################################################################################################################
+
+sub Orion3DPaste()
+'DESCRIPTION: (Ctrl+V) Pour remplacer le Ctrl C/Ctrl V bogué de cette merde.
+    ActiveDocument.Selection = clipBoard
+end sub
+
+'##################################################################################################################
+
+Sub AddMPNamespace()
+'DESCRIPTION: Encapsulate the given lines in a namespace called OR.
+	dim replacement
+
+	replacement = "namespace OR" + NewLine
+	replacement = replacement + "{" + NewLine
+	replacement = replacement + ActiveDocument.Selection + NewLine
+	replacement = replacement + "} // Namespace OR" + NewLine
+
+	ActiveDocument.Selection = replacement
+
+End Sub
+
+'##################################################################################################################
+
+sub CreateInlineFile
+'DESCRIPTION: Cette fonction suppose que les fonctions inline soient les dernières du fichier et qu'il y ait un namespace
+	dim inlineFileName
+	dim namespaceName
+	dim nStartOfInlineBloc
+	dim nEndOfInlineBloc
+	dim newHeaderFile
+	dim inlineBloc
+	dim comments
+	dim newInlineSymbol
+
+	ActiveDocument.Selection.StartOfDocument
+
+	if( not ActiveDocument.Selection.FindText( "namespace" ) ) then
+		MsgBox( "Class msut be include in a namespace" )
+		exit sub
+	end if
+
+	'Retrieve the namespace
+	ActiveDocument.Selection.StartOfLine dsFirstColumn
+	ActiveDocument.Selection.WordRight
+	ActiveDocument.Selection.WordRight dsExtend
+
+	namespaceName = ActiveDocument.Selection
+	Trim( namespaceName )
+
+	if( ActiveDocument.Selection.FindText( "inline" ) ) then
+		'Name of the inline file
+		inlineFileName = DocumentFullNameWithoutExtension + ".inl"
+
+		'Extract the inline functions
+		ActiveDocument.Selection.StartOfDocument
+
+		ActiveDocument.Selection.FindText( "};" )
+		ActiveDocument.Selection.LineDown
+		nStartOfInlineBloc = ActiveDocument.Selection.CurrentLine
+
+		ActiveDocument.Selection.FindText( "} // Namespace" )
+		ActiveDocument.Selection.LineUp
+		nEndOfInlineBloc = ActiveDocument.Selection.CurrentLine
+
+		ActiveDocument.Selection.StartOfDocument
+		ActiveDocument.Selection.MoveTo nStartOfInlineBloc,0,dsExtend
+
+		newHeaderFile = ActiveDocument.Selection
+
+		ActiveDocument.Selection.LineDown
+		ActiveDocument.Selection.MoveTo nEndOfInlineBloc,0,dsExtend
+
+		inlineBloc = ActiveDocument.Selection
+
+		ActiveDocument.Selection.LineDown
+		ActiveDocument.Selection.EndOfDocument dsExtend
+
+		newHeaderFile = newHeaderFile + ActiveDocument.Selection
+
+		ActiveDocument.Selection.StartOfDocument
+		ActiveDocument.Selection.EndOfDocument dsExtend
+		ActiveDocument.Selection = newHeaderFile
+
+		'Add the ifdef instruction for include the inline file
+		ActiveDocument.Selection.StartOfDocument
+		ActiveDocument.Selection.FindText( "} // Namespace" )
+		ActiveDocument.Selection.LineDown
+		ActiveDocument.Selection = ActiveDocument.Selection + NewLine
+		ActiveDocument.Selection = ActiveDocument.Selection + "#ifdef " + namespaceName + "_USE_INLINE" + NewLine
+		ActiveDocument.Selection = ActiveDocument.Selection + "#include """+ DocumentNameWithoutExtension + ".inl""" + NewLine
+		ActiveDocument.Selection = ActiveDocument.Selection + "#endif" + NewLine
+
+		'Creation of the inline file
+		Documents.Add "Text"
+		ActiveDocument.Save( inlineFileName )
+		
+		comments = CommentsBorder("*") + NewLine
+		comments = comments + "// Name: " + ActiveDocument.Name + NewLine
+		comments = comments + CreatedInformation + NewLine
+		comments = comments + CommentsBorder("*") + NewLine + NewLine
+
+		comments = comments + "namespace " + namespaceName + NewLine
+		comments = comments + "{" + NewLine
+
+		newInlineSymbol = namespaceName + "_INLINE"
+
+		
+		ActiveDocument.Selection = comments + inlineBloc + NewLine
+		ActiveDocument.Selection = ActiveDocument.Selection + "} // namespace " + namespaceName + NewLine
+
+		ActiveDocument.ReplaceText "inline" , newInlineSymbol
+
+		ActiveDocument.Save( inlineFileName )
+
+	end if
+end sub
+
+'##################################################################################################################
+
+sub InsertBlockComment()
+'DESCRIPTION: (Alt+Shift+B) Insert a block comment.
+	dim svgSelection
+	svgSelection = ActiveDocument.Selection
+	ActiveDocument.Selection = "    //-------------------------------------------------------------------------" + NewLine
+	ActiveDocument.Selection = ActiveDocument.Selection + "    /** \name NAME HERE */" + NewLine
+	ActiveDocument.Selection = ActiveDocument.Selection + "    //-------------------------------------------------------------------------" + NewLine
+	ActiveDocument.Selection = ActiveDocument.Selection + "    //@{" + NewLine
+	ActiveDocument.Selection = ActiveDocument.Selection + svgSelection + NewLine
+	ActiveDocument.Selection = ActiveDocument.Selection + "    //@}" + NewLine
+End Sub
+
+'##################################################################################################################
+
+Sub MemoryForMember()
+'DESCRIPTION: For a given data member, write the line for computing its size.
+	dim replacement
+
+	ActiveDocument.Selection.SelectLine
+	ActiveDocument.Selection.StartOfLine dsFirstColumn
+	ActiveDocument.Selection.WordRight
+	ActiveDocument.Selection.WordRight dsExtend
+	replacement = "+ MEMORY_USED_MEMBER( " + Trim( ActiveDocument.Selection.Text ) + " )" + NewLine
+	ActiveDocument.Selection = replacement
+
+End Sub
+
+'##################################################################################################################
+
+Sub MemoryForPointer()
+'DESCRIPTION: For a given data pointer, write the line for computing its size.
+	dim replacement
+
+	ActiveDocument.Selection.SelectLine
+	ActiveDocument.Selection.StartOfLine dsFirstColumn
+	ActiveDocument.Selection.WordRight
+	ActiveDocument.Selection.WordRight dsExtend
+	replacement = "+ MEMORY_USED_POINTER( " + Trim( ActiveDocument.Selection.Text ) + " )" + NewLine
+	ActiveDocument.Selection = replacement
+
+End Sub
+
+'##################################################################################################################
+
+Sub MemoryForInheritance()
+'DESCRIPTION: For a given data pointer, write the line for computing its size.
+	dim replacement
+
+	ActiveDocument.Selection.SelectLine
+	ActiveDocument.Selection.StartOfLine dsFirstColumn
+	ActiveDocument.Selection.WordRight
+	ActiveDocument.Selection.WordRight dsExtend
+	replacement = "+ MEMORY_USED_BASE_CLASS( " + Trim( ActiveDocument.Selection.Text ) + " )" + NewLine
+	ActiveDocument.Selection = replacement
+
+End Sub
+
+'##################################################################################################################
+
+Sub MemoryBase()
+'DESCRIPTION: The base implementation for GetMemoryUsed
+	dim replacement
+
+	ActiveDocument.Selection.SelectLine
+	replacement = "    return( MEMORY_USED_THIS()" + NewLine
+	replacement = replacement + "    );" + NewLine
+	ActiveDocument.Selection = replacement
+	
+End Sub
+
+
+
+'##################################################################################################################
+'										making a file pair
+'##################################################################################################################
+
+'	Macro that creates a .h / .cpp file pair. 
+'	It will prompt for a file name and create the .h / .cpp files accordingly.
+'	The .h file will be given a small header and the usual #ifndef _FILE_H ... sentry.
+'	The .cpp file will be given an #include "MyHFile.h".
+
+
+Sub MakeHFileifdef()
+'DESCRIPTION: Generates #ifdef THISHFILE_H ... #endif definitions
+
+      'if name = "ARNE.H" then s = "_ARNE_H"
+	  s = Ucase(Application.ActiveDocument.Name)
+	  p = Len(s)
+	  for i = 1 to Len(s)	
+	    if Mid(s,i,1)="." then p = i-1
+	  next
+	  s = "_" + Left(s,p) + "_H"
+
+	  Application.ActiveDocument.Selection.StartOfDocument
+ 	  Application.ActiveDocument.Selection = "#ifndef " + s + vbLf + "#define " + s +vbLf
+
+	  Application.ActiveDocument.Selection.EndOfDocument
+ 	  Application.ActiveDocument.Selection = vbLf + "#endif // " + s + vbLf
+ 	  
+End Sub
+
+Sub IncludeMyH()
+'DESCRIPTION: Inserts an #include "thisFile.h"
+
+      'if name = "ARNE.CPP" then s = "ARNE"
+	  s = Application.ActiveDocument.Name
+	  p = Len(s)
+	  for i = 1 to Len(s)	
+	    if Mid(s,i,1)="." then p = i-1
+	  next
+	  s = Left(s,p)
+	  Application.ActiveDocument.Selection = "#include "+Chr(34)+s+".h"+Chr(34)+vbLf
+	  
+End Sub
+
+Sub GetFriendFile()
+'DESCRIPTION: Opens the corresponding .h / .cpp file
+
+	currentFileName = Application.ActiveDocument.FullName
+	newFileName = ""
+	'MsgBox currentFileName  
+	if (Ucase(Right(currentFileName,2))=".H") then
+	  newFileName = Left(currentFileName,Len(currentFileName)-2)+".CPP"
+	elseif	(Ucase(Right(currentFileName,4))=".CPP") then
+	  newFileName = Left(currentFileName,Len(currentFileName)-4)+".H"
+	end if
+
+	'MsgBox newFileName  
+	if newFileName<>"" then	Application.Documents.Open newFileName
+
+End Sub
+
+
+
+Sub MakeFilePair()
+'DESCRIPTION: Generates a .h / .cpp file pair
+
+  dim newDoc 
+  s = InputBox("This macro generates a .h / .cpp file pair."+vbLf+vbLf+"Enter filename (not including extension)","Generate filepair")
+  if s<>"" then
+    newName = s+".h"
+	sTxt = "/*-----------------------------------------------" + vbCrLf
+	sTxt = sTxt+"     File name    : " + newName + vbCrLf
+	sTxt = sTxt+"     Author       : "+ vbCrLf
+	sTxt = sTxt+"  "+ vbCrLf
+	sTxt = sTxt+"     Description  : "+ vbCrLf
+	sTxt = sTxt+"  -----------------------------------------------*/" + vbCrLf
+	set newDoc = Application.Documents.Add("Text")
+	newDoc.Save (newName)
+	newDoc.Selection = vbCrLf+ "#include "+Chr(34)+"stdafx.h" +Chr(34) + vbCfLf+ vbCrLf
+	MakeHFileIfDef()
+	newDoc.Selection.StartOfDocument
+
+	newDoc.Selection = sTxt
+
+	newName = s +".cpp"
+	
+	'####
+	' todo :
+	set newDoc = Application.Documents.Add("Text")
+	newDoc.Save (newName)
+	' replace with : Application.BuildProjects(1).AddFile (newName) 
+	' or by :
+
+	'''The way to add files to the currently active project 
+	'''should imho be this: 
+	'''Set path to same as current active document 
+	'Application.CurrentDirectory = Application.ActiveDocument.Path 
+	'''add files to current active build project 
+	'Application.ActiveProject.AddFile(newName) 
+
+	
+	IncludeMyH()
+  end if
+  
+End Sub
+
+
+
+'#############################################################################################
+'			auto-commenting functions
+'#############################################################################################
+
+'------------------------------------------------------------------------------
+'FILE DESCRIPTION: Comment Macro
+'				       Highlight the function definition and run this macro
+'------------------------------------------------------------------------------
+
+Function RemoveCR( s )
+	    s = Trim( s )
+
+	   firstCr	   = InStr( 1, s, Chr(13), vbTextCompare )
+	    firstTab		    = InStr( 1, s, "	 ", vbTextCompare )
+   
+	    if firstTab = 1 then
+		    s = Right( s, len( s ) - firstTab )
+		    s = RemoveCR( s )
+	    end if
+
+	   if firstCr <= 2 then
+		    if firstCr > 0 then
+			    s = Right( s, len( s ) - firstCr - 1 )
+			    s = RemoveCR( s )
+		    end if
+	    end if
+	    RemoveCR = Trim( s )
+end function
+
+
+Sub PrintText( s, newline )
+	    ActiveDocument.Selection = s
+	    if newline then
+		    ActiveDocument.Selection.NewLine
+	    end if
+end sub
+
+Function ParseParam( s )
+	    text = s
+	    s = RemoveCR( s )
+	    retpos1 = InStrRev( s, "(" )
+	    retpos2 = InStrRev( s, "," )
+		if (retpos1 > retpos2) then
+			retpos = retpos1
+		else
+		    retpos = retpos2
+		end if
+	    ParseParam = Right( s, len( s ) - retpos )
+
+		ParseParam = LTrim(ParseParam)
+
+		Found = InStr(ParseParam, "	")
+		do while Found > 0
+			ParseParam = Right(ParseParam, Len(ParseParam) - Found)
+			Found = InStr(ParseParam, "	")
+		loop
+
+		ParseParam = LTrim(ParseParam)
+end function
+
+' this is main function
+Sub CommentFunction()
+
+	   Dim win
+	   Dim currentDate
+	   Dim currentTime
+
+	    set win = ActiveWindow
+
+	   if win.type <> "Text" Then
+		    MsgBox "This macro can only be run when a text editor window is active."
+	    else
+		    fun = ActiveDocument.Selection.Text
+		    if len(fun) = 0 then
+			    exit sub
+	    end if
+
+	   ' find the return value first
+	    firstSpace	    = InStr( 1, fun, " ", vbTextCompare )
+		firstPointer	= InStr( 1, fun, "*", vbTextCompare )
+		firstReference	= InStr( 1, fun, "&", vbTextCompare )
+	    firstCr	    = InStr( 1, fun, Chr(13), vbTextCompare )
+
+	   ' find the end of the function name
+	    endOfFuncName = InStr( 1, fun, "(", vbTextCompare )
+
+	   beginingOfReturnValue = 0
+	    endOfReturnValue = 100
+	    beginingOfFunctionName = 0
+	    validReturnValue = true
+
+		' If there is a pointer, then use that too
+		if firstPointer < endOfFuncName then
+		if firstPointer > 0 then
+				firstSpace = firstPointer + 1
+			end if
+		end if
+
+		' If there is a reference, then use that too
+		if firstReference < endOfFuncName then
+			if firstReference > 0 then
+				firstSpace = firstReference + 1
+			end if
+		end if
+
+	   if firstSpace < endOfReturnValue then
+		    if firstSpace > 0 then
+			    endOfReturnValue = firstSpace
+		    end if
+	    end if
+
+	   if firstCr < endOfReturnValue then
+		    if firstCr > 0 then
+			    endOfReturnValue = firstCr
+		    end if
+	    end if
+
+	   returnValue = Left( fun, endOfReturnValue - 1)
+
+	   if returnValue = "const" then
+		    ' Special case for const functions
+		    beginingOfReturnValue = endOfReturnValue
+	    
+		    if firstSpace = 0 then
+			    firstSpace = 1
+		    end if
+
+		   if firstCr = 0 then
+			    firstCr = 1
+		    end if
+
+		   ' Find the second return and the second space
+		    secondSpace     = InStr( firstSpace + 1, fun, " ", vbTextCompare )
+		    secondCr	    = InStr( firstCr + 1, fun, Chr(13), vbTextCompare )
+
+		   if secondSpace < secondCr then
+			    if secondSpace > 0 then
+				    endOfReturnValue = secondSpace
+			    end if
+		    else
+			    if secondCr > 0 then
+				    endOfReturnValue = secondCr
+			    end if
+		    end if
+
+		   ' Get the new return value
+		    returnValue = Mid( fun, beginingOfReturnValue + 1, endOfReturnValue + 1 )
+
+		   ' Find the begining of the function name
+		    if secondCr >= beginingOfFunctionName  then
+			    if secondCr < endOfFuncName then
+				    if secondCr > 0 then	       
+					    beginingOfFunctionName = secondCr + 2
+				    end if
+			    end if
+		    end if
+
+		   if secondSpace >= beginingOfFunctionName then
+			    if secondSpace < endOfFuncName then
+				    if secondSpace > 0 then
+					    beginingOfFunctionName = secondSpace + 1
+				    end if
+			    end if
+		    end if
+
+		   
+	    else
+		    ' Find the begining of the function name
+		    if firstCr >= beginingOfFunctionName  then
+			    if firstCr < endOfFuncName then
+				    if firstCr > 0 then
+					    beginingOfFunctionName = firstCr + 2
+				    end if
+			    end if
+		    end if
+
+		   if firstSpace >= beginingOfFunctionName then
+			    if firstSpace < endOfFuncName then
+				    if firstSpace > 0 then
+					    beginingOfFunctionName = firstSpace + 1
+				    end if
+			    end if
+		    end if
+	    end if
+
+	   if returnValue = "void" then
+		    returnValue = "None"
+	    end if
+
+	   if beginingOfFunctionName = 0 then
+		    beginingOfFunctionName = 1
+		    validReturnValue = false
+	    end if
+
+	   funcname = Mid( fun, beginingOfFunctionName, endOfFuncName - beginingOfFunctionName )
+
+	   'Get the description of the function from the user
+	    Purpose = InputBox("Description for " & funcname, "Comment Function","")
+	    if (Purpose = "") then
+		exit sub
+	    End if
+
+	   ActiveDocument.Selection.StartOfLine
+	    ActiveDocument.Selection.LineUp
+	    ActiveDocument.Selection.NewLine
+	    PrintText "/****************************************************************************\", TRUE
+		PrintText "* Function: " & funcname, TRUE
+	    PrintText "* ", TRUE
+	    PrintText "* Description:", TRUE
+
+		do while Len(Purpose) > 0
+			PurposeLine = Left(Purpose, 65)
+
+		Found = InStrRev( PurposeLine, " ")
+			if Len(Purpose) > 65 then
+				if Found < 65 then
+					PurposeLine = Left(PurposeLine, Found)
+				end if
+			end if
+
+			PrintText "* " + PurposeLine, TRUE
+			Purpose = Right(Purpose, Len(Purpose) - Len(PurposeLine))
+		loop
+
+		PrintText "* ", TRUE
+		    
+	    PrintText "* Parameters:", TRUE
+	    funct = Right( fun, Len(fun) - lppos )
+	    pos = 1
+	    first = true
+
+	   have_more = true		   
+	    
+	    do while pos > 0 and have_more
+		    pos = InStr( 1, funct, ",", vbTextCompare )
+		    if pos = 0 then
+			    have_more = false
+			    pos = InStr( 1, funct, "()", vbTextCompare )
+			    if pos = 0 then
+				    pos = InStr( 1, funct, ")", vbTextCompare )
+			    else
+				    pos = 0
+			    end if
+		    end if
+
+		   if pos > 1 then
+			    
+			    retval = Left( funct, pos - 1 )
+			    retval = ParseParam( retval )
+			    
+			    if Len(retval) > 0 then
+					    PrintText "* " + retval + "-> ", TRUE
+									ActiveDocument.Selection.LineUp
+										PlaceArrows("->")
+									       
+						ActiveDocument.Selection.LineDown
+			    else
+				    if first = true then
+					    PrintText "* None", TRUE
+				    end if
+			    end if
+		    else
+			    PrintText "* None", TRUE
+		    end if
+
+		   if have_more = true then
+			    funct = Right( funct, Len(funct) - pos )
+		    end if
+	    loop
+
+	   if validReturnValue = false then
+		    returnValue = "None"
+		else
+			if InStr(returnValue, "None") = 0 then
+				returnValue = returnValue + "<- "
+			end if
+	    end if
+ 
+ 
+	    PrintText "* ", TRUE
+	    PrintText "* Return:", TRUE
+	    PrintText "* " + returnValue, TRUE
+		if InStr(returnValue, "None") = 0 then
+			ActiveDocument.Selection.LineUp
+			PlaceArrows("<- ")
+			ActiveDocument.Selection.LineDown
+		end if
+
+		currentDate = Date
+		currentTime = Time
+		PrintText "* ", TRUE
+		PrintText "* ", FALSE
+		PrintText CStr(currentDate), FALSE
+		PrintText "  ", FALSE
+		PrintText CStr(currentTime), TRUE
+
+	    PrintText "* ", TRUE
+	    PrintText "* Author: Vin Parla", TRUE
+		PrintText "\*****************************************************************************/", FALSE
+	    End If
+end Sub
+
+Sub PlaceArrows(ArrowType)
+' -> use a shortcut keystroke to run this macro
+' -> press the shortcut key, if you are in the line you want to make a comment
+' -> or select multiple lines first, if you want to have a comment in any
+' -> of these lines
+' -> comment signs will appear on the right of source code, if there are none
+' -> if comments already exist, the positions will be adjusted 
+' -> the cursor will be placed behind the comment signs, so you can start 
+' -> to write the comment
+' -> note: this macro works only if you don't use tabstops (i don't like em, 
+' -> better use spaces) 
+
+ iWanted = 25					   ' start pos of comment
+ iStart=ActiveDocument.Selection.TopLine		    ' get start no of sel
+ iEnd  =ActiveDocument.Selection.BottomLine 	    ' get end no of sel    
+
+ For iPos = iStart To iEnd				   ' loop selected lines
+
+   ActiveDocument.Selection.GoToLine iPos		   ' go to one line
+   ActiveDocument.Selection.SelectLine		    ' and select it
+
+   tCurrText = ActiveDocument.Selection		   ' get whole line text
+
+   iComPos=InStr(tCurrText,ArrowType)			' search comment
+   If iComPos=0 Then				    ' none ? add new comment signs
+	 iComPos=InStr(tCurrText,vbLf)			    ' -> search cr\lf
+	 If iComPos>0 Then				       ' -> cr\lf on end ?
+	   tCurrText=Left(tCurrText,Len(tCurrText)-2)	    ' --> cut cr\lf (will be added later)
+	 End If
+	 If Len(tCurrText)=iWanted-1 Then		    ' -> len of line on to low?
+	   tCurrText=tCurrText+" "			      ' --> add a blank
+	 End If
+	 tCurrText=tCurrText + ArrowType + " " + vbLf       ' -> add comment + cr\lf
+	 iComPos = InStr(tCurrText, ArrowType)		    ' -> search comment again
+   End If
+
+   iEndPos=Len(tCurrText)				   ' how long are we ?
+	
+   If iComPos < iWanted Then			       ' to small ?
+	 iComPos=iComPos-1				    ' -> pos before comment
+	 tFText = Left(tCurrText, iComPos)		    ' -> text before comment
+	 tBText = Right(tCurrText,iEndPos-iComPos)	    ' -> text after comment
+	 tCurrText=tFText+Space(iWanted-iComPos-1)+tBText   ' -> new : front+s+back
+   ElseIf iComPos > iWanted Then 		       ' line bigger ?
+	 iComPos=iComPos-1				    ' -> pos before comment
+	 tFText = Left(tCurrText, iComPos)		    ' -> text before comment
+	 tBText = Right(tCurrText,iEndPos-iComPos)	    ' -> text after comment
+	 tFText = RTrim(tFText) 			    ' -> cut right spaces
+
+	iEndPos=Len(tFText)				   ' -> get new len (no spaces)
+	 If iEndPos>=iWanted Then			       ' -> to much source ?
+	   tCurrText=tFText+" "+tBText		      ' --> just add comment
+	 Else						    ' -> place for spaces ?
+	   tCurrText=tFText+Space(iWanted-iEndPos-1)+tBText ' --> add the spaces
+	 End If
+   End If
+   ActiveDocument.Selection = tCurrText		    ' replace new text
+ Next
+
+ ActiveDocument.Selection.GoToLine iStart		   ' go to start line
+ ActiveDocument.Selection.EndOfLine 		    ' set cursor at end of line
+
+End Sub
+
+
+
+
+'#############################################################################################
+'			auto-commenting functions 2e version
+'#############################################################################################
+
+Sub PrintText( s, newline )
+	ActiveDocument.Selection = s
+	if newline then
+		ActiveDocument.Selection.NewLine
+	end if
+end sub
+
+Function RemoveCR( s )
+	s = Trim( s )
+	firstCr 	= InStr( 1, s, Chr(13), vbTextCompare )
+	firstTab		= InStr( 1, s, "	", vbTextCompare )
+	if firstTab = 1 then
+		s = Right( s, len( s ) - firstTab )
+		s = RemoveCR( s )
+	end if
+	if firstCr <= 2 then
+		if firstCr > 0 then
+			s = Right( s, len( s ) - firstCr - 1 )
+			s = RemoveCR( s )
+		end if
+	end if
+	RemoveCR = Trim( s )
+end function
+
+Function ParseParam( s )
+	text = s
+	s = RemoveCR( s )
+	retpos = InStrRev( s, " " )
+	ParseParam = Right( s, len( s ) - retpos )
+end function
+
+Sub CommentFunction()
+'DESCRIPTION: Builds a header block for a method/function
+	Dim win
+	Dim author
+	Dim mmddyy
+	Dim addTrace
+	Dim purpose, purposeTemp, purposeLen, purposeIndex, wrapLen, test
+	Dim shortPad, longPad, fullrow
+
+	fullrow = "////////////////////////////////////////////////////////////////////////////////////////"
+	shortPad= "//  "
+	longPad	= "//		"
+	wrapLen = 78
+	mmddyy = Right("00" & Month(Now),2) & Right("00" & Day(Now),2) & Right("0000" & Year(Now),2)
+
+	set win = ActiveWindow
+	if win.type <> "Text" then
+		MsgBox "This macro can only be run when a text editor window is active."
+	else
+		fun = ActiveDocument.Selection.Text
+		if len(fun) = 0 then
+			MsgBox "You must highlight the function line first."
+			exit sub
+		end if
+	end if
+
+	author	= InputBox("Enter your name.", "CommentFunction", "Larry Dobson")
+	' for alignment ease, padding author name
+	author	= author & "                    "
+	purpose	= InputBox("Enter a purpose.", "CommentFunction", "Purpose of method/function")
+	addTrace= MsgBox ("Add TRACE() to beginning of method/function", 4, "CommentFunction")
+
+	' kill all CRLF and TAB to have one good line
+	fun = Replace(fun, vbCrLf, "")
+	fun = Replace(fun, vbTab, " ")
+
+	' find the end of the function name
+	endOfFuncName = InStr( 1, fun, "(", vbTextCompare )
+	if endOfFuncName = 0 then 
+		exit sub
+	end if
+
+	'find func name (search by the end)
+	lastSpace = InStrRev( fun, " ", endOfFuncName - 2, vbTextCompare )
+	funcname = Trim( Mid( fun, lastSpace + 1, endOfFuncName - lastSpace - 1 ) )
+	returnValue = Trim( Left( fun, lastSpace ) )
+
+	' if you want a different treatment for special words like const, ... 
+	' do it here on returnValue
+
+	ActiveDocument.Selection.StartOfLine
+	ActiveDocument.Selection.LineUp
+	ActiveDocument.Selection.EndOfLine
+	ActiveDocument.Selection.NewLine
+
+	PrintText fullrow, TRUE
+	PrintText shortPad & funcname & "()", TRUE
+	PrintText shortPad & "Purpose:", TRUE
+
+	'now, since purpose may take more than one line...	
+	do while Len(purpose) > 0
+		purposeTemp = Left(purpose, wrapLen)
+		purposeIndex = InStrRev( purposeTemp, " ", -1, vbTextCompare)
+		if Len(purpose) > wrapLen then
+			if purposeIndex < wrapLen then
+				purposeTemp = Left(purposeTemp, purposeIndex)
+			end if
+		end if
+		PrintText longPad & purposeTemp, TRUE
+		purpose = Right(purpose, Len(purpose) - Len(purposeTemp))
+	loop
+
+
+	PrintText shortPad, TRUE
+	PrintText shortPad & "Parameters:", TRUE
+
+	fun = Right( fun, Len(fun) - endOfFuncName )
+	pos = 1
+	have_more = true		
+	
+	do while pos > 0 and have_more
+		pos = InStr( 1, fun, ",", vbTextCompare )
+		if pos = 0 then
+			have_more = false
+			pos = InStr( 1, fun, ")", vbTextCompare )  
+		end if
+
+		if pos > 1 then
+			retval = Left( fun, pos - 1 )
+			retval = ParseParam( retval )
+			PrintText longPad & "[" + retval + "] :", TRUE
+		end if
+
+		if have_more = true then
+			fun = Right( fun, Len(fun) - pos )
+		end if 
+	loop
+	PrintText shortPad, TRUE
+
+	if returnValue = "" Or returnValue = "void" then 
+		returnValue = "none"
+	end if 
+	PrintText shortPad & "Returns:	" + returnValue, TRUE
+	PrintText shortPad, TRUE
+	PrintText shortPad & "Change Log", TRUE
+	PrintText longPad & "Author					MMDDYY	Description", TRUE
+	PrintText longPad & "--------------------	------	------------------------------------------------", TRUE
+	PrintText longPad & Left(author,20) & "	" & mmddyy & "	Initial Version", TRUE
+	PrintText shortPad, TRUE
+	PrintText longPad, TRUE
+	PrintText fullrow, FALSE
+
+	if addTrace = 6 then
+		ActiveDocument.Selection.FindText "{" 
+		ActiveDocument.Selection.CharRight
+		ActiveDocument.Selection.NewLine
+		PrintText "TRACE0( """ & funcname & "() entered\n"" );", TRUE
+	else
+		ActiveDocument.Selection.StartOfLine
+	end if
+end Sub
+
+Sub UpdateFunctionChangeLog()
+'DESCRIPTION: Adds a change log entry at cursor
+	Dim win
+	Dim author
+	Dim mmddyy
+	Dim desc, descTemp, descLen, descIndex, wrapLen, test
+	Dim noPad, shortPad, longPad, whichPad, fullrow
+
+	noPad	= "	"
+	shortPad= "//		"
+	longPad	= "//										"
+	wrapLen = 48
+	mmddyy	= Right("00" & Month(Now),2) & Right("00" & Day(Now),2) & Right("0000" & Year(Now),2)
+
+	set win = ActiveWindow
+	if win.type <> "Text" then
+		MsgBox "This macro can only be run when a text editor window is active."
+		exit sub
+' maybe someone with more time can figure out how to make
+' this safer.  Maybe, checks to see if in the block, then...
+'	else
+'		fun = ActiveDocument.Selection.Text
+'		if len(fun) = 0 then
+'			MsgBox "You must highlight the function line first."
+'			exit sub
+'		end if
+	end if
+
+	author	= InputBox("Enter your name.", "UpdateFunctionChangeLog", "Larry Dobson")
+	' for alignment ease, padding author name
+	author	= author & "                    "
+	desc	= InputBox("Why did you change the method/function.", "UpdateFunctionChangeLog", "desc of method/function")
+
+	PrintText shortPad & Left(author,20) & "	" & mmddyy, FALSE
+
+	'now, since description may take more than one line...	
+	whichPad = noPad
+	do while Len(desc) > 0
+		descTemp = Left(desc, wrapLen)
+		descIndex = InStrRev( descTemp, " ", -1, vbTextCompare)
+		if Len(desc) > wrapLen then
+			if descIndex < wrapLen then
+				descTemp = Left(descTemp, descIndex)
+			end if
+		end if
+		PrintText whichPad & descTemp, TRUE
+		desc = Right(desc, Len(desc) - Len(descTemp))
+		whichPad = longPad
+	loop
+
+end Sub
+
+
+

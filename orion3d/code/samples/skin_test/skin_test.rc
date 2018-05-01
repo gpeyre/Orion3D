@@ -1,0 +1,106 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// French (France) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+#ifdef _WIN32
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_WINDOW_ICON         ICON                    "wrapper_icone.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_SKINMENU MENU 
+BEGIN
+    POPUP "Animation"
+    BEGIN
+        POPUP "Control"
+        BEGIN
+            MENUITEM "Play/Pause (F1)",             ID_ANIMATION_CONTROL_PLAY
+
+            MENUITEM "Step backwards (F2)",         ID_CONTROL_STEPBACKWARDS
+            MENUITEM "Step forwards (F3)",          ID_CONTROL_STEPFORWARD
+            MENUITEM "Reset (F4)",                  ID_ANIMATION_CONTROL_RESETF4
+
+        END
+        MENUITEM SEPARATOR
+    END
+    POPUP "Model"
+    BEGIN
+        MENUITEM "Toggle Gouraud / Wireframe / Point (F5)", 
+                                                ID_MODEL_TOGGLEGOURAUD
+        MENUITEM "Display Skin (F7)",           ID_MODEL_DISPLAYSKIN
+        , CHECKED
+        MENUITEM "Display Skeletton (F8)",      ID_MODEL_DISPLAYSKELETTON
+        MENUITEM SEPARATOR
+    END
+    MENUITEM "Open Console",                ID_OPENCONSOLE
+    MENUITEM "Quit",                        IDM_QUIT
+END
+
+#endif    // French (France) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

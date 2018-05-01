@@ -1,0 +1,188 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Orion3DMAX"=".\Orion3DMAX.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_win32
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Orionviewer"="..\orionviewer\Orionviewer.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name wrapper_glut
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name orion3d
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wrapper_lua
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name toolkit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "orion3d"="..\orion3d\orion3d.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name wrapper_lua
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name orion3d_maths
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "orion3d_maths"="..\orion3d\orion3d_maths\orion3d_maths.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "toolkit"="..\ORION3D\toolkit\toolkit.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_font"="..\orion3d\wrapper_font\wrapper_font.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_glut"="..\Orion3d\wrapper_glut\wrapper_glut.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_gtk"="..\Orion3d\wrapper_gtk\wrapper_gtk.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_lua"="..\ORION3D\wrapper_lua\wrapper_lua.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_none"="..\Orion3d\wrapper_none\wrapper_none.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_win32"="..\Orion3d\wrapper_win32\wrapper_win32.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wrapper_wintext"="..\Orion3D\wrapper_wintext\wrapper_wintext.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

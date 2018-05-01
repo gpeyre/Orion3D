@@ -1,0 +1,96 @@
+/*! 
+	\page pagelicence The Orion3D licence
+
+	\section warning WARNING
+		This licence is not in its final state.  It will be superseded
+		by the final version as soon as possible.  Anyone agreeing to this licence
+		is bound to the final version of the licence when it is published.  This 
+		pre-licence agreement allows the <b>Orion3D</b> team to go forth with the publishing
+		and development of <b>Orion3D</b> without being hindered by the need to finalize
+		this licencing agreement.
+
+	\section subject Subject Matter
+		This License applies to the computer program known as "<b>Orion3D</b>". 
+		The "Program", below, refers to such program. The Program is a copyrighted 
+		work whose copyright is held by the members of the <b>Orion3D</b> Review Board, 
+		as defined below (the "Licensor").
+		  
+		This licence applies to the Program and all of its files including but 
+		not limited to:
+			- Files containing a copyright notice of the form
+			'Copyright (C) 2000-2001 The <b>Orion3D</b> Rewiew Board'
+			- Binary files such as:
+			orion3d.dll, orion3d.lib, orion3d.shlb, orion3d.a
+			krd_exporter.dle, ksp_exporter.dle
+			- Unless expressedly noted in the source files or in accompanying program
+			documentation, all files within the distribution are subject to this 
+			licence.
+
+		BY MODIFYING OR DISTRIBUTING THE PROGRAM (OR ANY WORK BASED ON THE PROGRAM),
+		YOU INDICATE YOUR ACCEPTANCE OF THIS LICENSE TO DO SO, AND ALL ITS TERMS AND
+		CONDITIONS FOR COPYING, DISTRIBUTING OR MODIFYING THE PROGRAM OR WORKS BASED
+		ON IT. NOTHING OTHER THAN THIS LICENSE OR THE AUTHORIZATION OF THE LICENSOR 
+		GRANTS YOU PERMISSION TO MODIFY OR DISTRIBUTE THE PROGRAM OR ITS DERIVATIVE 
+		WORKS.  IF YOU DO NOT ACCEPT THESE TERMS AND CONDITIONS, DO  NOT MODIFY OR 
+		DISTRIBUTE THE PROGRAM OR ANY WORK BASED ON THE PROGRAM.
+	
+		\section distribution Distribution of Orion3D:
+		It is forbidden to distribute modified <b>Orion3D</b> files.
+		
+		It is permitted to distribute the original <b>Orion3D</b> code only if the
+		present licence is included.
+
+		\section private Private utilization of Orion3D:
+		It is permitted to distribute works based on the original <b>Orion3D</b>
+		binaries only if the works are free and free of rights.
+		
+		It is only permitted to modify the <b>Orion3D</b> source code for personal
+		and non commercial uses.
+
+		\section Commercial utilization of Orion3D:
+		All commercial utilization (be it redistribution, sale, modification 
+		or utilization) is strictly forbidden without the written approval from
+		the Licesor and without obtaining a commercial licence.
+
+		\section o3darb Orion3D Review Board Members:
+		A contractual list of the individuals considered as <b>Orion3D</b> Review Board
+		members is available on the website www.orion3d.fr.st
+		
+		Non-contractual list:
+			- Gabriel PEYRE
+			- Antoine BOUTHORS
+			- Rakan EL-KHALIL
+		
+		\section limitations Limitations:
+		  
+		THE PROGRAM IS PROVIDED TO YOU "AS IS," WITHOUT WARRANTY. THERE IS NO 
+		WARRANTY FOR THE PROGRAM, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT 
+		LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+		PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. THE ENTIRE 
+		RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD 
+		THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, 
+		REPAIR OR CORRECTION. 
+			
+		IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL 
+		LICENSOR, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE THE PROGRAM 
+		AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, 
+		SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR 
+		INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR 
+		DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES 
+		OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF 
+		SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH 
+		DAMAGES. 
+
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+//  Copyright (C) 2000-2001 The  Orion3D Rewiew Board                        // 
+//---------------------------------------------------------------------------//
+//	This file is under the Orion3D licence.                                //
+//  Refer to orion3d_licence.txt for more details about the Orion3D Licence. //
+//---------------------------------------------------------------------------//
+//  Ce fichier est soumis a la Licence Orion3D.                              //
+//  Se reporter a orion3d_licence.txt pour plus de details sur cette licence.//
+///////////////////////////////////////////////////////////////////////////////
+//                           END OF FILE                                     //
+///////////////////////////////////////////////////////////////////////////////

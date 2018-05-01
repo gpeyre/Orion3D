@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding = "Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.00"
+	Name="Orionviewer"
+	SccProjectName=""
+	SccLocalPath="">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Release Glut|Win32"
+			OutputDirectory=".\obj/Release Glut"
+			IntermediateDirectory=".\obj/Release Glut"
+			ConfigurationType="1"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="../lua"
+				PreprocessorDefinitions="NDEBUG,_USE_GLUT_,_CONSOLE,WIN32,_WIN32_,ORION3D_IMPORTS"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="stdafx.h"
+				PrecompiledHeaderFile=".\obj/Release Glut/Orionviewer.pch"
+				AssemblerListingLocation=".\obj/Release Glut/"
+				ObjectFile=".\obj/Release Glut/"
+				ProgramDataBaseFileName=".\obj/Release Glut/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/MACHINE:I386"
+				AdditionalDependencies="odbc32.lib odbccp32.lib"
+				OutputFile="orionviewer_glut.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="../binaries/external_lib,../binaries/orion3d_lib"
+				ProgramDatabaseFile=".\obj/Release Glut/orionviewer_glut.pdb"
+				SubSystem="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				TypeLibraryName=".\obj/Release Glut/Orionviewer.tlb"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"
+				CommandLine="copy_dll"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG _USE_GLUT_"
+				Culture="1036"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+		</Configuration>
+		<Configuration
+			Name="Debug Glut|Win32"
+			OutputDirectory=".\obj/Debug_Glut"
+			IntermediateDirectory=".\obj/Debug_Glut"
+			ConfigurationType="1"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="../lua"
+				PreprocessorDefinitions="_DEBUG,_USE_GLUT_,_CONSOLE,WIN32,_WIN32_,ORION3D_IMPORTS"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="stdafx.h"
+				PrecompiledHeaderFile=".\obj/Debug_Glut/Orionviewer.pch"
+				AssemblerListingLocation=".\obj/Debug_Glut/"
+				ObjectFile=".\obj/Debug_Glut/"
+				ProgramDataBaseFileName=".\obj/Debug_Glut/"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="4"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/MACHINE:I386"
+				AdditionalDependencies="odbc32.lib odbccp32.lib"
+				OutputFile="orionviewer_glut.exe"
+				LinkIncremental="2"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="../binaries/external_lib,../binaries/orion3d_lib"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile=".\obj/Debug_Glut/orionviewer_glut.pdb"
+				SubSystem="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				TypeLibraryName=".\obj/Debug_Glut/Orionviewer.tlb"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"
+				CommandLine="copy_dll"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1036"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+		</Configuration>
+	</Configurations>
+	<Files>
+		<Filter
+			Name="ReadMe, licence &amp; doc"
+			Filter="">
+			<File
+				RelativePath=".\OrionViewer.dxt">
+			</File>
+			<File
+				RelativePath=".\OrionViewer_Readme.txt">
+			</File>
+			<File
+				RelativePath=".\orion3d_license.txt">
+			</File>
+			<File
+				RelativePath=".\orionviewer_help.txt">
+			</File>
+		</Filter>
+		<Filter
+			Name="Resources"
+			Filter="">
+			<File
+				RelativePath=".\Orionviewer.rc">
+			</File>
+			<File
+				RelativePath=".\idr_main.ico">
+			</File>
+		</Filter>
+		<Filter
+			Name="pch"
+			Filter="">
+			<File
+				RelativePath=".\stdafx.cpp">
+				<FileConfiguration
+					Name="Release Glut|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Glut|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\stdafx.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="GTK"
+			Filter="">
+			<File
+				RelativePath=".\OrionViewer_GTK.cpp">
+			</File>
+			<File
+				RelativePath=".\OrionViewer_GTK.h">
+			</File>
+		</Filter>
+		<File
+			RelativePath=".\OrionViewer.cpp">
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

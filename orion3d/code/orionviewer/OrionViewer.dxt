@@ -1,0 +1,36 @@
+/**
+	\mainpage	OrionViewer Source Code Documentation
+  
+	\image		html screenshot.jpg "nice Orion3D screenshot ..."
+              
+    \section	orion3d What is Orion3D ?
+				Orion3D is a portable 3D engine using OpenGL and advanced
+				rendering techniques such as Portals, PVS, BSP, hierarchical
+				animation, particules systems, etc... visit http://www.orion3d.fr.st
+				for up-to-date information about Orion3D.
+
+	\section	orionviewer What is OrionViewer ?
+				OrionViewer is a small program that is used to test Orion3D different
+				features. We strongly recommand that you start learning using Orion3D
+				by simply modifying this program.
+
+	\section    use How to use it ?
+				Use space to toggle between menu mode and move mode.
+					- In menu mode, you can press right mouse button to roll over an
+					options menu.
+					- In move mode, you can move using left button + mouse [rotation],
+					and left button + mouse [translation].
+
+				See help [press H or by the menu] for a complete listing of all features.
+
+	\subsection copyright Copyright
+				The OrionViewer files are free.
+
+				All files under /Orion3D are :
+				Copyright (C) 2000-2001 The Orion3D Rewiew Board.
+				
+				Refer to orion3d_licence.txt for more details about the Orion3D Licence.
+
+     \section	author How to join the authors ?
+				Visit the Orion3D homepage : http://www.orion3d.fr
+*/

@@ -1,0 +1,18 @@
+##############################################
+# List of file to use in GW test.
+# .ply : Stanford Polygon format.
+# .ase : 3DStudio text format.
+# .gwm : GeoWave Model file format.
+##############################################
+
+../ressources/wrl/headus/eric-head/eric-head-high.gwm
+../ressources/ase/fandisk-high.ase
+../ressources/ase/fandisk-high.gwm
+../ressources/wrl/headus/lyndon/lyndon-head-high.ase
+../ressources/wrl/headus/eric-head/eric-head-low.ase
+../ressources/wrl/headus/lyndon/lyndon-head-veryhigh.gwm
+../ressources/ase/earth2.gwm
+../ressources/wrl/object_gil_full.gwm
+../ressources/wrl/gil_simplified_high.wrl
+../ressources/wrl/gil_simplified_low.wrl
+../ressources/wrl/object_gil_simplified.wrl

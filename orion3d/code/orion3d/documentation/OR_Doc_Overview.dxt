@@ -1,0 +1,407 @@
+/*! 
+	\page pageoverview A brief overview of Orion3D features
+	In this page, we will review each of \b Orion3D key features. Each time, a short descritpion will be given.
+	We will focuss on the role of each class (without naming the methods and attributes explicitly), 
+	and the relations between them. The important thing here is to understant the design philosophy of
+	the engine.
+
+
+
+
+
+	\section	user The differents Orion3D class
+
+  	\subsection two The Orion files.
+			All \b Orion3D files and all \b Orion3D class begins by \c 'OR_', except 'orion3d.h', 
+			'orion3d.cpp' and 'orion3d.inl'.
+
+	\subsection one The Orion class
+			The Orion class is a wrapper class that can be used to have an easy access to 
+			all \b Orion3D datas such as the different object managers. But the different objects 
+			can be accessed directly, to have a more precise control over the engine.
+
+			Every \b Orion3D datas (including class, variables, macros, etc) are defined under
+			the OR namespace. It mean that if you want to use a class from \b Orion3D, you have
+			to use the prefix 'OR::'. If you're sure of having no conflicts with the \b Orion3D
+			names, you can put somewhere at the begining of your code \e 'using namespace OR;'
+			to avoid pre-fixing \b Orion3D class with 'OR::'.
+
+	\subsection other The other class
+			The Orion class is simply a usefull class to create and store all \b Orion3D
+			stuff you'll need for your application (animationmanager, object hierarchy, sound
+			system, input/output, etc). You can use Orion class methods to easyly acces these 
+			datas, select the elements in the different managers ... But if you need a more
+			precise control over your objects, you can also have access to each data that is part
+			of \b Orion3D. For example, you can get a reference to each manager, or get a pointer
+			to an object given it's name, and so on. Please refer to Orion class reference
+			for more details on all methods of the Orion class.
+
+			Don't forget to include the correct \b Orion3D headers corresponding to the objects
+			you want to use.
+
+
+
+
+
+
+	\section scenegraph The scene graph
+			The scene graph is where all dynamic objects are stored, in a hierarchical maner.
+
+	\subsection hierarchytree The hierarchy tree
+			Basiacaly, the scene graph is a tree, of class \c OR_HierarchyTree. This tree is composed 
+			of \c OR_Node, wich  have :
+				- a pointer on an \c OR_Object, wich is the object to display
+				- a list of pointer to other \c OR_Node, wich are the sons of the node.
+				
+	\subsection traversal Tree traversal
+			To render the scene graph, there are two major traversals of the tree :
+				- the Update traversal ; compute the datas of each object, mainly the 
+				local coordonates (ie. position & rotation, that's to say the AbsoluteMatrix).
+				- the Draw traversal : draw each object of the tree.
+
+			The update traversal is done at update of the output (for example, when the idle()
+			function of \b Glut is called). As every \c OR_Object of the tree is expressed with respect to
+			it's father, recursing on the tree node, from root to leaf, allow to compute the
+			absolute matrix of each object.
+
+	\subsection structure Structure of the tree
+			The root node of the tree has a special role. The \c OR_Object of this node is, by default, 
+			a point gizmo (could be anything else !), named \c OR_HierarchyRoot.
+			
+			The direct child of the root are clasicaly independant object, wich can move freely 
+			around the world. But when you move these objects, the whole sub-tree is moved in the
+			same maner. For instance, suppose you want to move a character.
+			The first node of the character in the hierarchy might be the torso, so if you move the
+			torso, the whole character will follow in the same direction.
+  
+	\section	shader The shaders
+			A shader is a description of how to render an object. It can include a texture, a
+			simple color, or complex effects, such as bump mapping.
+
+	\subsection	shaderclass The shader class
+			Every shader in \b Orion3D must inherit from the \c OR_Shader base class.
+			This is an abstract class wich describe the vital functions for a shader. The
+			principal function is ProcessShader wich takes a \c OR_Shadable object, and render 
+			it to screen.
+
+	\subsection shadable The shadable objects
+			A shadable object is an object on wich a shader can be applyed. For instance, a mesh
+			is a shadable object. Every shadable object must inherit from the \c OR_Shadable class.
+
+			This abstract class has in fact two roles : 
+				- it's a wrapper for the shader, who wants to access objet datas [vertex, 
+				normals...], and render part of the object to screen.
+				- it's also a state machine : the basic way to render an object is to ask the shader to 
+				flush all vertex to screen . But in many case (including alpha pipeline computations),
+				we only want to render a certain part of the object (some faces, for example).
+
+			The wrapper part propose two kinds of functions 
+				- accessor : allows the shader to access part of the datas being processed (for instance
+				the next vertex that is going to be rendered to screen). This is because shaders often make
+				per-vertex computations.
+				- processor : allows the shader to flush to screen either the all part of the datas
+				(that doesn't mean all the datas, but only all the datas speified in the state machine
+				part), or some part of this datas (typicaly the next face).
+
+			The state machine part of the \c OR_Shadable allows the caller (which can be the object himself
+			for a classical rendering, or the alphapipeline when using an alpha component)
+			to specify, before being processed by a shader, which datas are going to be involved in
+			the shading process. There are two ways to specify these datas :
+				- by a pointer on a list of index of vertex, this is called 'array mode'.
+				- process all vertex, this is called 'all' mode.
+
+	\subsection alphapipeline The alpha-pipeline
+				
+
+
+
+
+
+	\section	animation The animations
+		Animations are stored in files with the '.act' extension. these files can be generated using \b Orion3dMAX 
+		plugin for 3DSMax4. Refer to \ref serialization for a description of how these file are generated concretely.
+
+		In \b Orion3D, an animation can be applyed anywhere in the scene graph. It means that that an animation is not 
+		linked to a particular hierarchy. The only restriction is that the hierachy from which the animation was generated 
+		must have the same organisation as the target hierarchy. For exemple, if you use a women to create a walking
+		animation, you can load this animation on a man, but you it will likely fail if you try it on
+		a snake or a tank ...
+
+		Animation in \b Orion3D are stored via keyframes, discribing the object at various times in
+		the animation. \b Orion3D assumes that that the animation starts at time=0 and ends at time=1.
+		If the time is not in range [0,1], \b Orion3D uses the behaviour (refer to \ref animbehaviour) to
+		compute the values requested by the animation.
+
+	\subsection animationmanagerclass The animation manager class
+		The entry point for the animation is the animation manager, of class \c OR_AnimationManager. It contains every 
+		animation in the scene, and can be used either :
+			- to load an animation from a '.act' file.
+			- to export its animation to a new '.act' file.
+
+	\subsection animationclass The animation class
+		An animation is an object of class \c OR_Animation. An animation is in fact a hierachy of animation node.
+		This hierachy has the same structure as the original object hierachy it was created from.
+
+		For instance, suppose you've imported an animation of a man walking. Then the animation hierachy tree
+		will have same number of nodes and the same organisation as the man model.
+
+	\subsection animationnodeclass The animation node class 
+		Each node in the animation hierachy contains information about how to animate the corresponding node
+		in the real object [ie. scene graph] hierachy. This information is stored in a list of track, refer to
+		\ref trackclass for a full description.
+
+		For exemple, taking again the animation of a man walking, and suppose the start node [ie. root node]
+		of the model is its torso. Then, the root node of the animation tree will discribes the way the torso 
+		will translate and rotate over the time.
+
+	\subsection trackclass The animation track class
+		As said before, each animation node as a list of track, to describe the behaviour over the time
+		of a caracteristic of an object, for exemple it's position, orientation, color, ...
+
+		Each track class inherit from the base class \c OR_AnimationTrack. The key features of a track are :
+			- it's target : it's the caracteristic of the object that this track handle (for instance, 
+			its position, its rotation, etc). This determines the type of the data that the keyframe contains.
+			- it's evaluator type : it's the way the track compute the caracteristic all along the animation.
+			We briefly discuss this feature below.
+			- a list of keyframe : to compute the value of the caracteristic all along the animation, we only
+			have a list of key-value, given at different intervals of time.
+
+		For the moment, \b Orion3D can animate :
+			- floats [for example one component of a color, or position on one axis].
+			- 3D vectors [for example position].
+			- quaternions [orientation].
+			- booleans [state variables of the object].
+
+		The evalutor describes the way we evaluate the value of the caracteristic between two keyframes.
+		Here are the differents kind of evaluators that \b Orion3D uses :
+			- linear : values are linearly interpolated.
+			- constant : the value is the one of the previous keyframe in time.
+			- bezier : use a bezier curve (third order polynom) to interpolate. 
+			The curve is defined by the start point, the end point (which are both keyframes), 
+			and the two tangents at these points.
+			- TCB : use a TCB (third order polynom) curve to interpolate. 
+			The curve is defined by three real number : T [tension], C [continuity], and B [bias].
+			- smooth : only used for quaternions : uses a spherical linear interpolation.
+
+	\subsection keyframeclass The keyframe class
+		The keyframe describes the value of one carecteristic of the object, at a given time in the animation.
+		Every keyframe class in \b Orion3D inherit from \c OR_Keyframe base class.
+		The derived keyframe class are template class. There is a template for each kind of evaluator, the 
+		template is used to specify which kind of datas are stored in the keyframe.
+
+		For exemple, the class \c OR_Keyframe_Linear<float> describe a keyframe that is part
+		of the animation of a float value (for instance the color of the object),
+		and uses a linear interpolation for computation between keyframes.
+
+	\subsection animplayer The animation player
+		To play an animation, you must load it into a player, and then put the player 
+		on the scene graph, on the top of the hierachy that you want to see animated.
+
+		This allows animation to be shared (for exemple, one animation for everay man walking
+		in the scene), and to load multiple animation to be loaded on a single hierachy.
+
+		For example, you can load both an animation of walk and of run on the man. When the walking animation will
+		be finished, the man will automaticaly run.
+
+	\subsection animbehaviour The animation behaviours
+		Each animation track has two behaviours, describing how to play the track
+		animation before the begining and after the end of the animation. 
+		Here is a list of the different behaviours available :
+			- constant : keep the value constant, using first key for before behaviour, 
+			and last key for after behaviour.
+			- loop : play the animation in loop
+			- ping-pong : inverse the direction each time the track is replayed.
+			- relative loop : re-play the animation in loop, but not re-starting each time from zero.		
+		
+
+
+
+
+
+	\section	serialization Serialization
+		\b Orion3D provides a full serialization scheme, to allow to easily save or retrieve from a file
+		each part of the engine.
+
+	\subsection operators '<<' and '>>' operators
+		To save a data into a file, simply use the '>>' operator. The right hand of this operator must be
+		an \c OR_File object (refer to \ref fileclass), and the left hand must be either a basic type (like \c OR_Float, 
+		\c OR_I32, etc), a basic \b Orion3D class (mainly \c OR_Vector3D, \c OR_Matrix4x4, \c OR_Quaternion), or a class that
+		inherit from \c OR_Serializable.
+
+		To restore datas from a file, simply use the '<<' operator, which has the same limitation as the '>>'
+		operator.
+
+	\subsection fileclass File class
+		The file class is just a wrapper for a file. It contains methods to handle the file (open/close, etc).
+		Be carefull that deleting an \c OR_File doesn't close the file it supports, you must close it manualy.
+
+	\subsection	serializableclass Serializable class
+		Every class that want to be serializated must inherit from the class \c OR_Serializable. 
+		Basicaly, the only thing to do is to override the two functions :
+			- void BuildFromFile(OR_File)
+			- void BuildToFile(OR_File)
+
+		These function should call the '>>' and '<<' operators on each important memeber of the class.
+		For instance, suppose you want to serialize the class (and that that the class 'B' is also serializable) :
+		\code
+		class A
+		{
+		private:
+			int x;
+			B	b;
+		};
+		\endcode
+
+		All you should do is modify the declaration like this :
+		\code
+		class A: public OR_Serializable
+		{
+		public:
+			void BuildFromFile(OR_File f)
+			{ f >> x >> a; }
+			void BuildToFile(OR_File f)
+			{ f << x << a; }
+		private:
+			int x;
+			B	b;
+		};
+		\endcode
+
+	\subsection fileformat Orion3D files formats
+		All files used by \b Orion3D are created and loaded using the serialization process.
+		Here is a list of the file formats \b Orion3D uses, and where they come from :
+			- 'krd' : Contains datas  relative to the scene graph. It is mainly exported by the 
+			serialization methods of the \c OR_Hierarhy [ie. the scene graph], plus additional datas
+			from various manager (shaders, particules system, iso-surfaces ...).
+			- 'act' : Contains datas relative to the animaton. It is produced by the serialization
+			method of the \c OR_AnimationManager (which serialize each animation).
+			- 'ksp' : contains information relative to static geometry (ie. bsp and portal).
+			[Not yet updated]
+
+		In general, these files are produced by the \b Orion3DMAX plugin for \b 3DSMax4. What this plugin does is
+		just creating the correct object in \b Orion3D (using the originals from 3DS as models), and when the user
+		ask to export them, use the export functions from the class \c OR_Toolkit (\c CreateACT, \c CreateKRD).
+		These function will then call the correct serialization functions on the correct class.
+
+
+	
+
+	\section	physicengine The physic engine
+		The physic engine of \b Orion3D is fully describes in \ref pagephysic. 
+
+
+
+
+	\section	particules The particules systems engine
+		\b Orion3D propose a modular particule system that can be expanded to use any kind of forces, particules and emitters.
+
+	\subsection particulesclass The particules class
+		The base class for all particules used in \b Orion3D is \c OR_Particule. This discribes the physical proprieties of
+		a point particule :
+			- Physic datas (positon, inverse of the mass ...).
+			- Update method (to integrate the equation of motion using the verlet scheme or a RK4 scheme).
+			- The force moving the particule are stored in an accumulator. They come from either a force 
+			manager (for gravity force, etc), or from constraints resolution (for example, spring force between two
+			particules).
+
+		These particules are not only used in the particules systems : for example, they are the basis of the cloth
+		simulation engine [to come]. The particules in the particules systems are of class \c OR_DisplayableParticules, 
+		which inherit from the base class \c OR_Particule, and mainly add a shape to the particule, which in fact is just
+		a mesh (this allows non square particules).
+
+		NOTA : generaly, the shader used to display this mesh is an \c OR_BilboadShader, which force the particule
+		to be always facing the screen. But for non planar particules, a non-biblboard shader could be used.
+
+		Each \c OR_DisplayableParticule also have features related to the paticule system, like color, life time, etc.
+
+	\subsection particulsystemclass The particules system class
+		To update the physic behaviour of a group of particules, we use the \c OR_ParticuleManager, which just :
+			- resolved the constraints between particules (see \ref constraints).
+			- update the motion of the each particule.
+		
+		A remarquable propriety of the particules is the presence of a viscous drag, causing the a friction force 
+		to react against the speed of the particule. This is very usefull when working with spring constraints, avoiding 
+		particules to oscillate.
+
+		The system of particule (class \c OR_ParticuleSystem) inherit from the \c OR_ParticuleManager, and adds specific 
+		behaviour to create amazing special effects :
+			- initialized created particule using an emmitter (refer to \ref emmitter).
+			- remove deads particules (see below).
+			- draw alive particules.
+		
+		To avoid deleting particules, the dead particules are put in a dead list, and then  recycled when needed.
+
+	\subsection emmitter The emmitter
+		When a new particule is created or recycled, we ask the emitter to initialize it (see below). To produce random flow,
+		a variance from the emission direction can be set, alowing, for example, to produce a "cone of emission".
+
+		Each emmitter class must inherit from class \c OR_Emitter_ABC, which is just an interface for initializing a particule.
+		For instance, gizmo's class inhertit from this class, allowing different shape of emission (ray, sphere, plane ...).
+		For instance, if you use a vector gizmo, the particules flow will look like a fontain, the direction of the vector
+		giving the main direction of the flow.
+
+	\subsection constaints The constaints
+		One of the key-feature of the \b Orion3D particules engine is the use of binary constaints. This allow to 
+		achieve specific control over the particules behaviour, to create effects like cloth simulating (see \ref cloth).
+
+		There are two kind of constraints :
+			- non-relaxable one : these one are resolved simply by adding force to the particule force accumulator.
+			For example, spring constraints between two particules are example of non relaxable constraints.
+			- relaxable one : these constraints are resolved using a relaxation scheme, as described in Jakobsen paper
+			<A HREF="http://www.ioi.dk/Homepages/tj/publications/gdc2001.htm">Advanced Character Physics</A>.
+		
+		Relaxable are absolute contraint, such as minimum distance contraint, avoiding two particules to collide.
+		The more high the number of iteration in the resolution of the relaxable is set, the more accurate the simultation will
+		be. In practice, 2 or 3 iterations gives good results.
+
+	\subsection cloth Cloth simultation
+		The cloth simultation is one application of the \b Orion3D particules engine. The \c OR_Cloth class inherit from
+		the particule manager. It allows :
+			- to create a set of particule representing the cloth.
+			- to initialize constraints between these particules to set up the cloth behaviour (see below).
+			- to update the simulation using the particule manager basic features.
+
+		There are two types of constraints used to maintain the cloth shape :
+			- spring constraints :  to give elasticity to the cloth
+			- minimum distance contraint : to avoid having too much elasticity (needs for non linear elongation).
+				
+
+
+
+
+
+	\section error Orion3D error management [to come]
+		\b Orion3D has a powerfull error system management, using C++ error class.
+
+		\subsection errorclass The \c OR_Error class
+		Each class in \b Orion3D must inherit from the class \c OR_Error, which provide basic feature for
+		error handling, including : 
+			- The name of the function where the error happend
+			- A message describing the type of the error.
+
+		\subsection messagemanagerclass The messages handler
+		\b Orion3D provide a class to display information at run time. It is called \c OR_MessageHandler
+		It provide default functions do display the incoming messages, but this messages can be redirected using 
+		callback functions. The different sorts of messages are :
+			- debug informations
+			- fatal errors
+			- informations
+			- warnings
+		
+		\subsection errormanager The error manager
+		Uncaught errors are signaled to the error manager (class \c OR_ErrorManager), which display 
+		an error message using the message handler. It then cause the program to crash softly  ...
+
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+//  Copyright (C) 2000-2001 The  Orion3D Rewiew Board                        // 
+//---------------------------------------------------------------------------//
+//	This file is under the Orion3D licence.                                //
+//  Refer to orion3d_licence.txt for more details about the Orion3D Licence. //
+//---------------------------------------------------------------------------//
+//  Ce fichier est soumis a la Licence Orion3D.                              //
+//  Se reporter a orion3d_licence.txt pour plus de details sur cette licence.//
+///////////////////////////////////////////////////////////////////////////////
+//                           END OF FILE                                     //
+///////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,202 @@
+/*!
+	\mainpage	GW Maths Library User Manual
+	
+	\section WHAT		What is GWML ?
+	
+	\b GWML stands for \b GeoWave \b Maths \b Library.
+	It was first developed to provide a safe and robust
+	mathematic library for \b GeoWave.
+	
+	It relies on these two libraries for complex systems solving :
+		- \b TNT, \c http://math.nist.gov/tnt/ : for dense systems
+		resolution (LU, QR, Choleski, SVD, Eigenvalues).
+		- \b LASPACK : \c http://www.tu-dresden.de/mwism/skalicky/laspack/laspack.html : 
+		for sparse system resolution. It includes a bunch of iterative solvers
+		(Jacobi, Conjugate gradient, ...) together with some precontionner
+		(SSOR, LUT). It can be used in a multigrid fashion.
+	
+	\b GeoWave is a surface-based wavelet project 
+	designed in C++. More information can be found
+	at <a href="http://nikopol0.alrj.org/geowave">http://nikopol0.alrj.org/geowave</a>.
+	
+	\section OVER		Overview
+	
+	The library is fully C++ designed (uses STL templates, etc.). It is designed to be safe
+	and robust, more than really fast (but in fact, it is!). In debug mode, a lot of error checks are done.
+	
+	First, staticaly allocated vector (class \c GW_VectorStatic) and matrix 
+	(class \c GW_MatrixStatic) are available.
+	They are created using C++, template so that you can 
+	set the size and the type (float, double, complex, int ...).
+	
+	Then, you can find some lightweight 2D, 3D and 4D
+	primitives such as: 
+		- Matrix: size 2D, 3D, and 4D (class \c GW_Matrix2x2, \c GW_Matrix3x3, \c GW_Matrix4x4).
+		- Vector: 2D,3D,4D (class \c GW_Vector2D, \c GW_Vector3D, \c GW_Vector4D).
+		- Quaternions (class \c GW_Quaternion).
+	
+	Then, dynamicaly allocated dense and sparse vector and matrix: 
+		- Matrix of any size (class \c GW_MatrixNxP).
+		- Vector of any size (class \c GW_VectorND).
+		- Sparse matrix (class \c GW_SparseMatrix).
+		
+	At last, there are some helpers’ routines that can perform: 
+		- Spherical manipulation (area computing, etc).
+		- Convertion between dynamicaly and staticaly allocated structures.
+		
+	Note that \b GWML redefine its own base data types such as \c GW_Float, but
+	this should be easy to interface with your own type (you can still use \c float).
+	
+	\section DISTRIB		Distribution
+	\subsection DOWN		Download
+	
+	\b GWML main page is located at <a href="http://nikopol0.alrj.org/gwml/">http://nikopol0.alrj.org/gwml/</a>.
+	
+	For the moment, there is only a distribution built with Visual C++ .NET, but it should be
+	straightforward to compile it on other platforms / with other compilers.
+	
+	<a href="http://nikopol0.alrj.org/gwml/gwml.tar.gz">Download the full distribution</a>.
+	
+	\subsection DOC		Documentation
+	
+	The whole documentation can be brownes online, starting 
+	from the the main page <a href="http://nikopol0.alrj.org/gwml/" target="_blank"/>http://nikopol0.alrj.org/gwml/</a>.
+	
+	You can also download the documentation :
+		- <a href="http://nikopol0.alrj.org/gwml/GWML_doc.tar.gz">A \c .zip file containing HTML help files</a>.
+		- <a href="http://nikopol0.alrj.org/gwml/GWML_doc.chm">A \c .chm file i.e. Microsoft compressed help file</a>.
+	
+	\subsection BIN		Binaries
+	
+	\b GWML class are implemented in the header (.h) file. You only 
+	need to link with \b LASPACK library (\c laspack.lib and \c laspack_dbg.lib
+	are provided for convenance under Visual C++, and can be found in external/).
+	
+	A test program is located under \c bin/. A binary of this program
+	is available for Win32 OS. This programm launch the function \c TestClass
+	of each class. It performs a bunch of test and computations.
+	
+	\section LICENCE	License
+	
+	Note that \b GWML is neither in the public domain nor under \b GPL license.
+	It is copyright (c) 2002 Gabriel Peyré. You can use and modify it for your own
+	use. You may copy and distribute verbatim copies of the Program's source code as you receive it.
+	For any other questions (including commercial use), the Orion3D license 
+	apply. Refer to <a href="http://orion3d.alrj.org">http://orion3d.alrj.org</a> for more information.
+		
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+		
+	\section EXAM		Example
+	
+	The easiest way to see \b GWML in action is to take a look at
+	the methods \c TestClass() which provide some classical use.
+	
+	Here is a short example of the use of an iterative solver: 
+	
+	\code
+	n = 1000;
+	GW_Float eps = 1e-10;
+	GW_VectorND x(n);
+	GW_VectorND b(n);
+	GW_SparseMatrix SM(n);
+	SM.BuildTriDiag( -3,3,4 );
+	cout << "Bi-conjugate gradient with SSOR test, size " << n << endl;
+	b.Randomize();
+	err = SM.IterativeSolve( x, b, GW_SparseMatrix::IterativeSolver_BiCG, GW_SparseMatrix::Preconditioner_SSOR, 
+			eps, 5*n, 1.2, GW_True );
+	cout << "Error=" << err << "." << endl;
+	\endcode
+	
+	You can define your own vector type to fit your needs. For instance a vector
+	of \c int of size 5 :
+	\code
+	typedef GW_MatrixStatic<5,5,int> MyMatrix;
+	typedef GW_VectorStatic<5,int> MyVector;
+	MyMatrix M;
+	MyVector v;
+	M.Randomize(0,10);
+	v.Randomize(0,10);
+	cout << "The product of M by v is " << M*v << endl;
+	\endcode
+	
+	\section TRAITS Traits
+	
+	If you don't know what \e traits are, you should probably read this
+	short introduction <a href="http://www.cantrip.org/traits.html">http://www.cantrip.org/traits.html</a>.
+	
+	Here is the definition given by the author :
+	<blockquote>
+	<p><i>
+		A class used in place of template parameters. 
+		As a class, it aggregates useful types and constants; as a template, 
+		it provides an avenue for that "extra level of indirection" that solves all software problems. 
+	</i></p>
+	</blockquote>
+	
+	If you only want to use \b GWML with basic type such as \c float, \c double, \c int or even 
+	\c complex<float,float>, you don't have to bother about traits. On the other
+	hand, if you want to use this library with some exotic type, such as multi-precision 
+	integer, finite field arithmetics and so on, then you will have to provide the basic
+	operation to the class.
+	
+	This is done in a transparent maner using the \e traits philosophy. 
+	All you have to do is to define a template class named 
+	\c gw_basic_type_traits, templated by your basic type.
+	In this class, you should define all operator that are specific to you type, 
+	e.g. modulus (the \c abs function for C-float), random generation, invetibility
+	(for the integer, only +1/-1 are invertible) ...
+	
+	Take a look at the definition for the \c complex support in \b GWML :
+	
+	\code
+	struct gw_basic_type_traits< GW_Complex<GW_Float> >
+	{
+		static double SquareModulus(const GW_Complex<GW_Float>& val)
+		{ return (double) val.SquareModulus(); }
+		static double Modulus(const GW_Complex<GW_Float>& val)
+		{ return (double) val.Modulus(); }
+		/** must retrun a number at random between say [0,1] */
+		static GW_Complex<GW_Float> Random(const GW_Complex<GW_Float>& min, const GW_Complex<GW_Float>& max)	
+		{ 
+			GW_Float r = GW_RAND_RANGE(min.real(),max.real());
+			GW_Float i = GW_RAND_RANGE(min.imag(),max.imag());
+			return  GW_Complex<GW_Float>( r, i ); 
+		}
+		static const char* GetBasicTypeName()
+		{ return "complex"; }
+		static GW_Bool IsInvertible(const GW_Complex<GW_Float>& x)
+		{ return (x.real()!=0 && x.imag()!=0); }
+	};
+	\endcode
+	
+	If you want to override the default traits for some classic type (such
+	as \c float), then you can give an additional parameter to the matrix and/or vector class 
+	template. For example, suppose you wan a smaller \c epsilon value for equality test for
+	the \c float based matrix. Then define your own template :
+	
+	\code
+	struct my_basic_type_traits<float>
+	{
+		/** We redefine this function. */
+		static double Epsilon()
+		{ return 1e-15; }
+	};
+	\endcode
+	
+	Then, when you want to create a matrix that use this \c epsilon value, all
+	you need to do is the following (we use a typedef for simplicity) :
+	
+	\code
+	typedef GW_MatrixStatic< 5,5,float, my_basic_type_traits<float> > MyMatrix;
+	\endcode
+	
+	Note that we didn't write :
+	
+	\code 
+	GW_MatrixStatic< 5,5,float, my_basic_type_traits<float>>
+	\endcode
+	
+	Because \c >> would be parsed as the flush operator for stream ...
+*/

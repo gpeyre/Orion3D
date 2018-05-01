@@ -1,0 +1,172 @@
+/*! 
+	\page pagescriptshell Scripting langage and shell management.
+	
+	Here is a in depth explanation of the scripting features of \b Orion3D, which includes :
+		- a wrapper for the scripting langage \b LUA.
+		- a fully integrated shell architectures, with powerfull features.
+
+
+
+
+
+
+	\section lua_wrapper The LUA wrapper
+
+	\subsection lua_overview A brief overview of LUA scripting langage
+	
+	Please refer to \b LUA documentation for an indepth explaination 
+
+	\subsection lua_wrapper_present Presentation of the wrapper
+
+	\b Orion3D uses \b LUA as a scripting langage, both for :
+		- running external scripts, that can access \b Orion3D internals 
+		via functions defined by \b Orion3D.
+		- running these functions directly in the console shell.
+		
+	The wrapper is an external static library that wrapp the calls to \b LUA
+	ANSI-C functions. The class \c OR_WrapperLUA contains a \c LUA state allow
+	the user : 
+		- to execute a file / a string.
+		- to register / unregister a new C function.
+
+
+
+
+	\section shell The integrated shell
+
+	\subsection shell_overview A brief overview of Orion3D shell
+
+	\subsection classic_func The shell classical functions
+
+	\subsection additional_functions The additional shell functions
+
+	\subsection shell_object The shell object class
+
+	
+	
+	\section howtoshell How to implement a class so that it is accessible from the shell ?
+	
+	\section mustdo The things you must do :
+	
+	Your class must inherit from the absract base class \c OR_ShellObject_ABC.
+	
+	You must implement these two methods :
+		- virtual void BuildSonList(T_ShellObjectList& SonList);
+		- virtual void BuildFuncDeclList(T_ShellFuncDeclList& FuncDeclList);
+		
+	We now will briefly explain what should be done in these two methods.
+	
+	\subsection buildsonlistfunc The BuildSonList method :
+	
+	In this method, you should tell to the shell wich shell objects are the son
+	of the current object. But first, you should erase the list that the shell is passing
+	to you. So your function should look like this :
+	
+	\begincode
+	void OR_Object::BuildSonList(T_ShellObjectList& ShellSonList)
+	{
+		ShellSonList.clear();
+
+		[here add the son of the object to the list]
+	}
+	\endcode
+	
+	Then, suppose you have an object name 'MyObj' that is a shell object
+	(ie. that inherit from \c OR_ShellObject), and you want to make this object 
+	accessible from the shell, ie. you want to make this object as a son of your
+	class in the shell hierarchy. To do that, you just have to assign a shell name
+	to your object, and push it in the list :
+	
+	\begincode
+	MyObj.SetShellName( OR_String("MyObject") );
+	ShellSonList.push_back( MyObj );
+	\endcode
+	
+	\subsection buildfuncdecllistfunc The \c BuildFuncDeclList method :
+	
+	In this method, you should tell to the shell wich additional function you want to 
+	add to the shell. Adding functions to the shell is the way the user or the script 
+	will be able to access data from the class. 
+	
+	For example, suppose your class
+	is a car (ClassCar), and you want to allow the shell (ie. the user or a script) to be able to 
+	check the color of the car. Will see in the next section how to declare and implement
+	this function. But you should first begin by filling the function \c BuildFuncDeclList, wich
+	should look like : 
+	
+	\begincode
+	void OR_Object::BuildFuncDeclList(T_ShellFuncDeclList& FuncDeclList)
+	{
+		OR_ADD_SHELL_FUNC(FuncDeclList, PrintColor, "Print the color of the car.");
+	}
+	\endcode
+	
+	The macro \c OR_ADD_SHELL_FUNC does all the job : just pass the name of the list, 
+	the name of the function, and a comment that will by printed when the user calls
+	the 'help' shell command. That's all !
+	
+	\subsection implementuserufnc Implement an user defined function
+	
+	So, we have added our function \c 'PrintColor' to the list of available functions, 
+	but we have neither declare it, nor implement it ! For the declaration, it's easy,
+	simply add the following line to the public part of your class : 
+	
+	\begincode
+	OR_DECL_SHELL_FUNC(PrintColor, 0);
+	\endcode
+	
+	The number '0' is the number of values returned by the function (here we simply output the color, 
+	we don't return any value). 
+	This is all we have to do for the header (\c .h) file. Now implement the function 
+	(in the \c .cpp file) :
+	
+	\begincode
+	void CarClass::PrintColor(OR_ShellCallStack& stack)
+	{
+		OR_INIT_SHELL_FUNC( PrintColor, 0 );
+		
+		OR_SHELL_FUNC_PRINT( OR_String( OR_ACCESS_THIS(CarClass).AccessColor() ) );
+	}
+	\endcode
+	
+	The first thing to do is calling the macro \c 'OR_INIT_SHELL_FUNC' to initialize
+	everything (mainly the console stuff, but this doesn't matter). The '0' arguement is
+	just the number of arguments the function should takes.
+	
+	Then, the macro \c 'OR_SHELL_FUNC_PRINT' is a shortcut to output a string on the console.
+	The string we print, in this example, is simply the result of a call to \c AccessColor() 
+	(I assume you have written such a nice accessor, so I can get the name of this so pretty 
+	car). Just if you are wondering why you can't just write : 
+	
+	\begincode
+	OR_SHELL_FUNC_PRINT( OR_String( this->AccessColor() ) );
+	\endcode
+	
+	This is because the method must be static, so we have to make the classic trick (using
+	a static this pointer) to access the datas of the class.
+	
+	
+	\subsection morcomplexfunction Implement a mor complex function
+	
+	\subsection autoimplmentaccssors Auto implementation of accessors
+	
+
+	
+	How to declare subdirectory ?
+	
+
+	How to declare new functions ?
+
+		
+	How to implement new functions ?
+
+
+	\subsection shell_callstack The shell callstack
+
+
+	\subsection shell_kernel The shell kernel
+
+
+	\subsection shell_console The shell console
+
+*/
